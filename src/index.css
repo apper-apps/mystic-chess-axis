@@ -1,0 +1,145 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import 'react-toastify/dist/ReactToastify.css';
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6b46c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7c3aed;
+}
+
+/* Chess board styles */
+.chess-square {
+  @apply relative flex items-center justify-center transition-all duration-200;
+}
+
+.chess-square.light {
+  @apply bg-surface;
+}
+
+.chess-square.dark {
+  @apply bg-primary;
+}
+
+.chess-square.selected {
+  @apply ring-2 ring-accent ring-opacity-80;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+}
+
+.chess-square.legal-move {
+  @apply ring-1 ring-accent ring-opacity-60;
+}
+
+.chess-square.legal-move::after {
+  content: '';
+  @apply absolute w-3 h-3 bg-accent rounded-full opacity-60;
+}
+
+.chess-square.capture-move::after {
+  content: '';
+  @apply absolute w-full h-full border-2 border-error rounded opacity-70;
+}
+
+.chess-piece {
+  @apply relative text-4xl cursor-pointer select-none transition-all duration-200;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.chess-piece:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 4px 8px rgba(107, 70, 193, 0.6));
+}
+
+.chess-piece.dragging {
+  @apply z-50 pointer-events-none;
+  transform: scale(1.1) rotate(5deg);
+}
+
+.chess-piece.white {
+  color: #f8fafc;
+  text-shadow: 0 0 5px rgba(248, 250, 252, 0.8);
+}
+
+.chess-piece.black {
+  color: #1e293b;
+  text-shadow: 0 0 5px rgba(30, 41, 59, 0.8);
+}
+
+/* Check indicator */
+.in-check {
+  @apply ring-2 ring-error ring-opacity-90;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* Toast overrides */
+.Toastify__toast-container {
+  @apply text-sm;
+}
+
+.Toastify__toast {
+  @apply bg-surface border border-primary/20 text-white rounded-lg shadow-xl;
+  min-height: 48px;
+}
+
+.Toastify__toast--success {
+  @apply bg-success/90;
+}
+
+.Toastify__toast--error {
+  @apply bg-error/90;
+}
+
+.Toastify__toast--warning {
+  @apply bg-warning/90;
+}
+
+.Toastify__toast--info {
+  @apply bg-info/90;
+}
+
+.Toastify__progress-bar {
+  @apply bg-white/30;
+}
+
+.Toastify__close-button {
+  @apply text-white/70 hover:text-white;
+}
+
+/* Magical glow effects */
+@keyframes magical-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(107, 70, 193, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(107, 70, 193, 0.9), 0 0 30px rgba(245, 158, 11, 0.4);
+  }
+}
+
+.magical-glow {
+  animation: magical-glow 3s ease-in-out infinite;
+}
+
+/* Button hover effects */
+.btn-magical {
+  @apply bg-gradient-to-r from-primary to-purple-700 hover:from-purple-700 hover:to-primary;
+  transition: all 0.3s ease;
+}
+
+.btn-magical:hover {
+  box-shadow: 0 4px 20px rgba(107, 70, 193, 0.5);
+  transform: translateY(-1px);
+}

@@ -1,0 +1,56 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import ChessPiece from '@/components/atoms/ChessPiece';
+
+const ChessSquare = ({
+  row,
+  col,
+  piece,
+  isLight,
+  isSelected,
+  isLegalMove,
+  isCaptureMove,
+  isInCheck,
+  onClick,
+  disabled
+}) => {
+  const squareClasses = [
+    'chess-square',
+    'w-16 h-16',
+    isLight ? 'light' : 'dark',
+    isSelected && 'selected',
+    isLegalMove && !isCaptureMove && 'legal-move',
+    isCaptureMove && 'capture-move',
+    isInCheck && 'in-check',
+    !disabled && 'cursor-pointer'
+  ].filter(Boolean).join(' ');
+
+  return (
+    <motion.div
+      className={squareClasses}
+      onClick={!disabled ? onClick : undefined}
+      whileHover={!disabled ? { scale: 1.02 } : {}}
+      whileTap={!disabled ? { scale: 0.98 } : {}}
+    >
+      {piece && (
+        <ChessPiece
+          type={piece.type}
+          color={piece.color}
+          isSelected={isSelected}
+          disabled={disabled}
+        />
+      )}
+      
+      {isLegalMove && !piece && (
+        <motion.div
+          className="w-3 h-3 bg-accent rounded-full opacity-70"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.2 }}
+        />
+      )}
+    </motion.div>
+  );
+};
+
+export default ChessSquare;

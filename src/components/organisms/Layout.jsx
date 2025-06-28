@@ -1,0 +1,15 @@
+import React from 'react';
+import Header from '@/components/organisms/Header';
+
+const Layout = ({ children }) => {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background via-slate-900 to-background">
+      <Header />
+      <main className="container mx-auto px-4 py-6">
+        {children}
+      </main>
+    </div>
+  );
+};
+
+export default Layout;
