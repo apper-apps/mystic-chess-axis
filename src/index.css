@@ -26,12 +26,40 @@
   min-width: 36px;
 }
 
+/* Base chess square colors */
 .chess-square.light {
   background-color: #f0d9b5;
 }
 
 .chess-square.dark {
   background-color: #b58863;
+}
+
+/* Dragons theme - Dark earth tones */
+.chess-square.light.dragons {
+  background-color: #8B4513;
+}
+
+.chess-square.dark.dragons {
+  background-color: #654321;
+}
+
+/* Wizards theme - Mystical purples */
+.chess-square.light.wizards {
+  background-color: #9A7BB0;
+}
+
+.chess-square.dark.wizards {
+  background-color: #6B46C1;
+}
+
+/* Warriors theme - Battle-worn browns */
+.chess-square.light.warriors {
+  background-color: #A0522D;
+}
+
+.chess-square.dark.warriors {
+  background-color: #8B4513;
 }
 
 .chess-square.selected {

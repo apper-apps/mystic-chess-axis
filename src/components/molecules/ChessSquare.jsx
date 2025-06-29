@@ -17,11 +17,14 @@ const ChessSquare = ({
   disabled,
   pieceSet
 }) => {
-  const getSquareClasses = () => {
+const getSquareClasses = () => {
     let classes = 'chess-square relative flex items-center justify-center cursor-pointer transition-all duration-200 ';
     
-    // Base color
+    // Base color with piece set theming
     classes += isLight ? 'light ' : 'dark ';
+    if (pieceSet && pieceSet !== 'classic') {
+      classes += `${pieceSet} `;
+    }
     
     // State classes
     if (isSelected) classes += 'selected ';
