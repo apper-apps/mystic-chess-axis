@@ -260,21 +260,25 @@ return (
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="max-w-8xl mx-auto"
+      className="w-full mx-auto"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
-        {/* Left Column: Game Status + Fallen Warriors */}
-        <div className="lg:col-span-1 order-1 lg:order-1 space-y-3 sm:space-y-4 lg:space-y-6">
-          <GameStatus 
-            gameState={gameState} 
-            isComputerThinking={isComputerThinking}
-            difficulty={difficulty}
-          />
-          <CapturedPieces capturedPieces={gameState.capturedPieces} />
+      <div className="flex flex-col space-y-3 sm:space-y-4 lg:space-y-6">
+        {/* Upper Section: Game Status + Captured Pieces */}
+        <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 lg:gap-6">
+          <div className="flex-1">
+            <GameStatus 
+              gameState={gameState} 
+              isComputerThinking={isComputerThinking}
+              difficulty={difficulty}
+            />
+          </div>
+          <div className="flex-1">
+            <CapturedPieces capturedPieces={gameState.capturedPieces} />
+          </div>
         </div>
 
-        {/* Center: Main Chess Board */}
-        <div className="lg:col-span-1 order-2 lg:order-2">
+        {/* Center: Full-Width Chess Board */}
+        <div className="flex justify-center">
           <div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 lg:p-6 shadow-2xl">
             <ChessBoard
               gameState={gameState}
@@ -288,24 +292,28 @@ return (
           </div>
         </div>
 
-        {/* Right Column: Game Controls + Battle Chronicle */}
-        <div className="lg:col-span-1 order-3 lg:order-3 space-y-3 sm:space-y-4 lg:space-y-6">
-          <GameControls
-            onNewGame={handleNewGame}
-            onUndo={handleUndo}
-            onHint={handleHint}
-            onReset={handleReset}
-            difficulty={difficulty}
-            onDifficultyChange={setDifficulty}
-            pieceSet={pieceSet}
-            onPieceSetChange={handlePieceSetChange}
-            audioSettings={audioSettings}
-            onAudioSettingsChange={handleAudioSettingsChange}
-            canUndo={gameState.moveHistory.length >= 2}
-            canHint={gameState && gameState.currentTurn === 'white' && !hintCooldown}
-            disabled={isComputerThinking}
-          />
-          <MoveHistory moves={gameState.moveHistory} />
+        {/* Lower Section: Game Controls + Move History */}
+        <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 lg:gap-6">
+          <div className="flex-1">
+            <GameControls
+              onNewGame={handleNewGame}
+              onUndo={handleUndo}
+              onHint={handleHint}
+              onReset={handleReset}
+              difficulty={difficulty}
+              onDifficultyChange={setDifficulty}
+              pieceSet={pieceSet}
+              onPieceSetChange={handlePieceSetChange}
+              audioSettings={audioSettings}
+              onAudioSettingsChange={handleAudioSettingsChange}
+              canUndo={gameState.moveHistory.length >= 2}
+              canHint={gameState && gameState.currentTurn === 'white' && !hintCooldown}
+              disabled={isComputerThinking}
+            />
+          </div>
+          <div className="flex-1">
+            <MoveHistory moves={gameState.moveHistory} />
+          </div>
         </div>
       </div>
     </motion.div>
