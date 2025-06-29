@@ -211,9 +211,9 @@ return (
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-className="max-w-7xl mx-auto px-2 sm:px-4"
+      className="max-w-7xl mx-auto px-2 sm:px-4 pb-20 sm:pb-8 md:pb-6 lg:pb-4"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6 min-h-0">
         {/* Game Status - Mobile First, Desktop Left */}
         <div className="lg:col-span-1 order-1 lg:order-1">
           <GameStatus 

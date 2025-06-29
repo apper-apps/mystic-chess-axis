@@ -52,17 +52,17 @@ const CapturedPieces = ({ capturedPieces }) => {
 
 return (
     <motion.div
-      className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-2 sm:p-3 md:p-4 lg:p-6 shadow-xl"
+      className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 sm:p-4 md:p-5 lg:p-6 shadow-xl"
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: 0.1 }}
     >
-      <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-display font-semibold mb-2 sm:mb-3 md:mb-4 flex items-center text-white">
+      <h3 className="text-base sm:text-lg md:text-xl lg:text-xl font-display font-semibold mb-3 sm:mb-4 md:mb-4 flex items-center text-white">
         <ApperIcon name="Trophy" className="w-4 sm:w-5 h-4 sm:h-5 mr-2 text-accent" />
         Fallen Warriors
       </h3>
 
-      <div className="space-y-2 sm:space-y-3 md:space-y-4">
+      <div className="space-y-3 sm:space-y-4 md:space-y-4">
         {/* Captured by You (Black pieces) */}
         <div className="space-y-1 sm:space-y-2">
           <div className="flex items-center justify-between">
@@ -71,15 +71,14 @@ return (
               {capturedPieces.black.length}
             </span>
           </div>
-          <div className="min-h-6 sm:min-h-7 md:min-h-8 p-1 sm:p-2 bg-secondary/30 rounded border border-primary/10">
+<div className="min-h-8 sm:min-h-8 md:min-h-9 p-2 sm:p-2 bg-secondary/30 rounded border border-primary/10">
             {capturedPieces.black.length > 0 ? (
               renderCapturedPieces(capturedPieces.black, 'black')
             ) : (
-              <span className="text-xs sm:text-sm text-slate-500 italic">None yet...</span>
+              <span className="text-sm sm:text-sm text-slate-500 italic">None yet...</span>
             )}
           </div>
         </div>
-
 {/* Captured by Computer (White pieces) */}
         <div className="space-y-1 sm:space-y-2">
           <div className="flex items-center justify-between">
@@ -88,18 +87,18 @@ return (
               {capturedPieces.white.length}
             </span>
           </div>
-          <div className="min-h-6 sm:min-h-7 md:min-h-8 p-1 sm:p-2 bg-secondary/30 rounded border border-primary/10">
+<div className="min-h-8 sm:min-h-8 md:min-h-9 p-2 sm:p-2 bg-secondary/30 rounded border border-primary/10">
             {capturedPieces.white.length > 0 ? (
               renderCapturedPieces(capturedPieces.white, 'white')
             ) : (
-              <span className="text-xs sm:text-sm text-slate-500 italic">None yet...</span>
+              <span className="text-sm sm:text-sm text-slate-500 italic">None yet...</span>
             )}
           </div>
         </div>
 
         {/* Material Advantage */}
         {(capturedPieces.white.length > 0 || capturedPieces.black.length > 0) && (
-          <div className="pt-2 sm:pt-3 md:pt-3 border-t border-primary/20">
+          <div className="pt-3 sm:pt-4 md:pt-4 border-t border-primary/20">
             <div className="flex items-center justify-between">
               <span className="text-xs sm:text-sm md:text-base text-slate-300">Balance:</span>
               <div className="flex items-center space-x-1 sm:space-x-2">
