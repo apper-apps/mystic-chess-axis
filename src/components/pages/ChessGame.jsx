@@ -16,6 +16,8 @@ const ChessGame = () => {
   const [difficulty, setDifficulty] = useState('medium');
   const [pieceSet, setPieceSet] = useState('classic');
   const [isComputerThinking, setIsComputerThinking] = useState(false);
+  const [hintMove, setHintMove] = useState(null);
+  const [hintCooldown, setHintCooldown] = useState(false);
 
 useEffect(() => {
     initializeGame();
@@ -149,8 +151,49 @@ useEffect(() => {
     };
     
     toast.success(`Piece style changed to ${pieceSetNames[newPieceSet]}!`);
+toast.success(`Piece style changed to ${pieceSetNames[newPieceSet]}!`);
   };
 
+  const handleHint = async () => {
+    if (!gameState || gameState.currentTurn !== 'white' || isComputerThinking || hintCooldown) return;
+
+    setHintCooldown(true);
+    
+    try {
+      const hint = ChessService.getHint(gameState, difficulty);
+      if (hint) {
+        setHintMove(hint);
+        toast.info(`Hint: Consider moving ${hint.piece} from ${hint.from} to ${hint.to}!`);
+        
+        // Clear hint after 5 seconds
+        setTimeout(() => {
+          setHintMove(null);
+        }, 5000);
+      } else {
+        toast.warning("The mystical forces offer no guidance...");
+      }
+    } catch (error) {
+      console.error('Hint error:', error);
+      toast.error("The oracle is silent...");
+    } finally {
+      // 10 second cooldown
+      setTimeout(() => {
+        setHintCooldown(false);
+      }, 10000);
+    }
+  };
+
+  const handleReset = () => {
+    if (window.confirm("Reset the mystical battlefield? All progress will be lost immediately.")) {
+      const newGame = ChessService.createNewGame();
+      setGameState(newGame);
+      setSelectedSquare(null);
+      setLegalMoves([]);
+      setHintMove(null);
+      setHintCooldown(false);
+      toast.success("The battlefield has been reset by ancient magic!");
+    }
+  };
   if (!gameState) {
     return (
       <div className="flex items-center justify-center min-h-96">
@@ -186,6 +229,7 @@ return (
               gameState={gameState}
               selectedSquare={selectedSquare}
               legalMoves={legalMoves}
+              hintMove={hintMove}
               onSquareClick={handleSquareClick}
               isComputerThinking={isComputerThinking}
               pieceSet={pieceSet}
@@ -198,11 +242,14 @@ return (
           <GameControls
             onNewGame={handleNewGame}
             onUndo={handleUndo}
+            onHint={handleHint}
+            onReset={handleReset}
             difficulty={difficulty}
             onDifficultyChange={setDifficulty}
             pieceSet={pieceSet}
             onPieceSetChange={handlePieceSetChange}
             canUndo={gameState.moveHistory.length >= 2}
+            canHint={gameState && gameState.currentTurn === 'white' && !hintCooldown}
             disabled={isComputerThinking}
           />
         </div>

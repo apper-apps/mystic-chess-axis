@@ -7,20 +7,22 @@ const ChessBoard = ({
   gameState, 
   selectedSquare, 
   legalMoves, 
+  hintMove,
   onSquareClick, 
   isComputerThinking,
   pieceSet = 'classic'
 }) => {
-  const renderSquare = (row, col) => {
+const renderSquare = (row, col) => {
     const square = ChessService.getSquareNotation(row, col);
     const piece = gameState.board[row][col];
     const isSelected = selectedSquare === square;
     const isLegalMove = legalMoves.some(move => move.to === square);
     const isCaptureMove = isLegalMove && piece;
+    const isHintFrom = hintMove && hintMove.from === square;
+    const isHintTo = hintMove && hintMove.to === square;
     const isInCheck = piece?.type === 'king' && 
                      piece.color === gameState.currentTurn && 
                      gameState.gameStatus === 'check';
-
 return (
       <ChessSquare
         key={`${row}-${col}`}
@@ -31,6 +33,8 @@ return (
         isSelected={isSelected}
         isLegalMove={isLegalMove}
         isCaptureMove={isCaptureMove}
+        isHintFrom={isHintFrom}
+        isHintTo={isHintTo}
         isInCheck={isInCheck}
         onClick={() => onSquareClick(row, col)}
         disabled={isComputerThinking}

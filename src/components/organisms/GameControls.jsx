@@ -7,11 +7,14 @@ import ApperIcon from '@/components/ApperIcon';
 const GameControls = ({
   onNewGame,
   onUndo,
+  onHint,
+  onReset,
   difficulty,
   onDifficultyChange,
   pieceSet,
   onPieceSetChange,
   canUndo,
+  canHint,
   disabled
 }) => {
   const difficultyOptions = [
@@ -87,8 +90,32 @@ return (
             <span className="hidden sm:inline">Undo Move</span>
             <span className="sm:hidden">Undo</span>
           </Button>
-        </div>
 
+          <Button
+            variant="accent"
+            onClick={onHint}
+            disabled={!canHint || disabled}
+            size="sm"
+            className="hover:bg-info/20 hover:text-info text-xs sm:text-sm lg:text-base"
+            title={!canHint ? "Hint on cooldown or not your turn" : "Get a mystical hint"}
+          >
+            <ApperIcon name="Lightbulb" className="w-3 sm:w-4 h-3 sm:h-4 mr-1 lg:mr-2" />
+            <span className="hidden sm:inline">Get Hint</span>
+            <span className="sm:hidden">Hint</span>
+          </Button>
+
+          <Button
+            variant="destructive"
+            onClick={onReset}
+            disabled={disabled}
+            size="sm"
+            className="hover:bg-error/20 hover:text-error text-xs sm:text-sm lg:text-base"
+          >
+            <ApperIcon name="RotateCcw" className="w-3 sm:w-4 h-3 sm:h-4 mr-1 lg:mr-2" />
+            <span className="hidden sm:inline">Reset</span>
+            <span className="sm:hidden">Reset</span>
+          </Button>
+        </div>
 <div className="pt-2 sm:pt-3 lg:pt-4 border-t border-primary/20">
           <h4 className="text-xs sm:text-sm font-medium text-slate-300 mb-2">Quick Tips</h4>
           <ul className="text-xs text-slate-400 space-y-1">

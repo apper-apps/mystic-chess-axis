@@ -672,6 +672,34 @@ static generatePieceAttacks(gameState, row, col, piece) {
       }
     }
 
-    return pieces;
+return pieces;
+  }
+
+  static getHint(gameState, difficulty = 'medium') {
+    if (!gameState || gameState.currentTurn !== 'white' || gameState.gameStatus !== 'active') {
+      return null;
+    }
+
+    // Import ComputerPlayer dynamically to avoid circular dependency
+    const { ComputerPlayer } = require('./computerPlayer');
+    
+    try {
+      const bestMove = ComputerPlayer.findBestMove(gameState, difficulty);
+      if (bestMove) {
+        const fromPos = this.parseSquareNotation(bestMove.from);
+        const piece = gameState.board[fromPos.row][fromPos.col];
+        
+        return {
+          from: bestMove.from,
+          to: bestMove.to,
+          piece: piece?.type || 'piece',
+          confidence: bestMove.score || 0
+        };
+      }
+    } catch (error) {
+      console.error('Error getting hint:', error);
+    }
+
+    return null;
   }
 }
