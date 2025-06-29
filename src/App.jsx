@@ -5,7 +5,7 @@ import ChessGame from "@/components/pages/ChessGame";
 import Layout from "@/components/organisms/Layout";
 
 function App() {
-return (
+  return (
     <BrowserRouter>
       <div className="min-h-screen bg-background text-white font-body">
         <Layout>
@@ -13,7 +13,7 @@ return (
             <Route path="/" element={<ChessGame />} />
           </Routes>
         </Layout>
-<ToastContainer
+        <ToastContainer
           position="top-right"
           autoClose={3000}
           hideProgressBar={false}
@@ -24,7 +24,7 @@ return (
           draggable
           pauseOnHover
           theme="dark"
-          className="z-50 !top-16 sm:!top-4"
+          className="z-50"
         />
       </div>
     </BrowserRouter>

@@ -22,8 +22,8 @@
 }
 
 .chess-square {
-  min-height: 35px;
-  min-width: 35px;
+  min-height: 36px;
+  min-width: 36px;
 }
 
 /* Base chess square colors */
@@ -68,8 +68,8 @@
 }
 .chess-square {
   @apply relative flex items-center justify-center transition-all duration-200;
-  min-height: 40px;
-  min-width: 40px;
+  min-height: 35px;
+  min-width: 35px;
 }
 
 @media (min-width: 640px) {
@@ -79,17 +79,10 @@
   }
 }
 
-@media (min-width: 768px) {
-  .chess-square {
-    min-height: 56px;
-    min-width: 56px;
-  }
-}
-
 @media (min-width: 1024px) {
   .chess-square {
-    min-height: 72px;
-    min-width: 72px;
+    min-height: 64px;
+    min-width: 64px;
   }
 }
 
@@ -158,9 +151,6 @@ left: 50%;
   height: 80%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
-  text-align: center;
 }
 
 @media (min-width: 640px) {
