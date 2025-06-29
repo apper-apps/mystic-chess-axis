@@ -34,11 +34,12 @@ useEffect(() => {
     }
   }, [gameState?.currentTurn, gameState?.gameStatus]);
 
-  const initializeGame = () => {
+const initializeGame = () => {
     const newGame = ChessService.createNewGame();
     setGameState(newGame);
     setSelectedSquare(null);
     setLegalMoves([]);
+    setHintMove(null); // Clear any existing hint
     toast.success("A new mystical battle begins!");
   };
 
@@ -79,11 +80,12 @@ useEffect(() => {
 
     // If clicking on a legal move destination
     if (selectedSquare && legalMoves.some(move => move.to === square)) {
-      try {
+try {
         const updatedGame = ChessService.makeMove(gameState, selectedSquare, square);
         setGameState(updatedGame);
         setSelectedSquare(null);
         setLegalMoves([]);
+        setHintMove(null); // Clear any existing hint after move
 
         if (updatedGame.gameStatus === 'checkmate') {
           toast.success("Victory! The light has triumphed!");
@@ -120,9 +122,10 @@ useEffect(() => {
         updatedGame = ChessService.undoLastMove(updatedGame);
       }
       
-      setGameState(updatedGame);
+setGameState(updatedGame);
       setSelectedSquare(null);
       setLegalMoves([]);
+      setHintMove(null); // Clear hint after undo
       toast.info("Time flows backward in this realm...");
     } catch (error) {
       toast.error(error.message);
@@ -148,12 +151,10 @@ useEffect(() => {
       dragons: 'Ancient Dragon pieces',
       wizards: 'Mystic Wizard pieces',
       warriors: 'Epic Warrior pieces'
-    };
+};
     
     toast.success(`Piece style changed to ${pieceSetNames[newPieceSet]}!`);
-toast.success(`Piece style changed to ${pieceSetNames[newPieceSet]}!`);
   };
-
   const handleHint = async () => {
     if (!gameState || gameState.currentTurn !== 'white' || isComputerThinking || hintCooldown) return;
 
