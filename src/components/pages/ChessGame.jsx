@@ -260,7 +260,7 @@ return (
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="max-w-7xl mx-auto"
+      className="max-w-8xl mx-auto"
     >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
         {/* Left Column: Game Status + Fallen Warriors */}

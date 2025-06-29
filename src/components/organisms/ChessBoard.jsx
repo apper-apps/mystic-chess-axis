@@ -45,28 +45,28 @@ return (
 
 return (
     <div className="relative">
-    {/* Board coordinates - Top */}
+{/* Board coordinates - Top */}
     <div className="flex justify-center mb-1 lg:mb-2">
         <div className="grid grid-cols-8 gap-0 w-fit">
             {["a", "b", "c", "d", "e", "f", "g", "h"].map((file, index) => <div
                 key={file}
-                className="w-9 sm:w-12 lg:w-16 text-center text-xs text-slate-400 font-medium">
+                className="w-10 sm:w-15 lg:w-20 text-center text-xs text-slate-400 font-medium">
                 {file}
             </div>)}
         </div>
     </div>
     <div className="flex items-center justify-center">
         {/* Rank numbers (left) - Hidden on mobile */}
-        <div className="hidden sm:flex flex-col-reverse mr-1 lg:mr-2">
+<div className="hidden sm:flex flex-col-reverse mr-1 lg:mr-2">
             {[1, 2, 3, 4, 5, 6, 7, 8].map(rank => <div
                 key={rank}
-                className="h-9 sm:h-12 lg:h-16 flex items-center text-xs text-slate-400 font-medium">
+                className="h-10 sm:h-15 lg:h-20 flex items-center text-xs text-slate-400 font-medium">
                 {rank}
             </div>)}
         </div>
 {/* Chess board */}
-        <motion.div
-            className="grid grid-cols-8 border-2 lg:border-4 border-primary/30 rounded-lg overflow-hidden shadow-2xl w-72 sm:w-96 lg:w-[512px] aspect-square"
+<motion.div
+            className="grid grid-cols-8 border-2 lg:border-4 border-primary/30 rounded-lg overflow-hidden shadow-2xl w-80 sm:w-[480px] lg:w-[640px] aspect-square"
             initial={{
                 scale: 0.9,
                 opacity: 0
@@ -85,21 +85,21 @@ return (
             }, (_, col) => renderSquare(row, col)))}
         </motion.div>
         {/* Rank numbers (right) - Hidden on mobile */}
-        <div className="hidden sm:flex flex-col-reverse ml-1 lg:ml-2">
+<div className="hidden sm:flex flex-col-reverse ml-1 lg:ml-2">
             {[1, 2, 3, 4, 5, 6, 7, 8].map(rank => <div
                 key={rank}
-                className="h-9 sm:h-12 lg:h-16 flex items-center text-xs text-slate-400 font-medium">
+                className="h-10 sm:h-15 lg:h-20 flex items-center text-xs text-slate-400 font-medium">
                 {rank}
             </div>)}
         </div>
     </div>
     {/* Bottom coordinates */}
     {/* Bottom coordinates */}
-    <div className="flex justify-center mt-1 lg:mt-2">
+<div className="flex justify-center mt-1 lg:mt-2">
         <div className="grid grid-cols-8 gap-0 w-fit">
             {["a", "b", "c", "d", "e", "f", "g", "h"].map((file, index) => <div
                 key={file}
-                className="w-9 sm:w-12 lg:w-16 text-center text-xs text-slate-400 font-medium">
+                className="w-10 sm:w-15 lg:w-20 text-center text-xs text-slate-400 font-medium">
                 {file}
             </div>)}
         </div>
