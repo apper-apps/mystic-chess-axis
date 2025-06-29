@@ -334,66 +334,68 @@ transition={{ duration: 0.6 }}
 
 {/* Center Section: Chess Board with Left Side Panels */}
         <div className="w-full">
-          <div 
-            className="grid gap-3 lg:gap-4 items-start"
-            style={{
-              gridTemplateColumns: `${showCapturedPieces || showMoveHistory ? 'minmax(280px, 1fr)' : 'auto'} minmax(0, 2fr)`,
-              gridTemplateAreas: '"left center"'
-            }}
-          >
-            {/* Left: Fallen Warriors & Battle Chronicle */}
-            <div className="flex flex-col space-y-3 lg:space-y-4" style={{ gridArea: 'left' }}>
-              {/* Fallen Warriors (Captured Pieces) */}
-              {showCapturedPieces ? (
-                <CapturedPieces 
-                  capturedPieces={gameState.capturedPieces}
-                  isCollapsed={false}
-                  onToggle={toggleCapturedPieces}
-                />
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="flex justify-center"
-                >
-                  <Button
-                    variant="secondary"
-                    onClick={toggleCapturedPieces}
-                    className="writing-vertical-rl text-orientation-mixed p-2 h-32 hover:bg-primary/20"
-                    title="Show Fallen Warriors"
+          <div className={`grid gap-3 lg:gap-6 items-start ${
+            showCapturedPieces || showMoveHistory 
+              ? 'grid-cols-1 lg:grid-cols-[320px_1fr]' 
+              : 'grid-cols-1 lg:grid-cols-[auto_1fr]'
+          }`}>
+            {/* Left Column: Fallen Warriors & Battle Chronicle */}
+            {(showCapturedPieces || showMoveHistory) && (
+              <div className="w-full lg:w-80 flex flex-col space-y-3 lg:space-y-4 order-2 lg:order-1">
+                {/* Fallen Warriors (Captured Pieces) */}
+                {showCapturedPieces ? (
+                  <CapturedPieces 
+                    capturedPieces={gameState.capturedPieces}
+                    isCollapsed={false}
+                    onToggle={toggleCapturedPieces}
+                  />
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="flex justify-center lg:justify-start"
                   >
-                    <ApperIcon name="Trophy" className="w-4 h-4" />
-                  </Button>
-                </motion.div>
-              )}
+                    <Button
+                      variant="secondary"
+                      onClick={toggleCapturedPieces}
+                      className="writing-vertical-rl lg:writing-mode-horizontal text-orientation-mixed p-2 h-32 lg:h-auto lg:w-full hover:bg-primary/20"
+                      title="Show Fallen Warriors"
+                    >
+                      <ApperIcon name="Trophy" className="w-4 h-4" />
+                      <span className="hidden lg:inline lg:ml-2">Show Fallen Warriors</span>
+                    </Button>
+                  </motion.div>
+                )}
 
-              {/* Battle Chronicle (Move History) */}
-              {showMoveHistory ? (
-                <MoveHistory 
-                  moves={gameState.moveHistory}
-                  isCollapsed={false}
-                  onToggle={toggleMoveHistory}
-                />
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="flex justify-center"
-                >
-                  <Button
-                    variant="secondary"
-                    onClick={toggleMoveHistory}
-                    className="writing-vertical-rl text-orientation-mixed p-2 h-32 hover:bg-primary/20"
-                    title="Show Battle Chronicle"
+                {/* Battle Chronicle (Move History) */}
+                {showMoveHistory ? (
+                  <MoveHistory 
+                    moves={gameState.moveHistory}
+                    isCollapsed={false}
+                    onToggle={toggleMoveHistory}
+                  />
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="flex justify-center lg:justify-start"
                   >
-                    <ApperIcon name="Scroll" className="w-4 h-4" />
-                  </Button>
-                </motion.div>
-              )}
-            </div>
+                    <Button
+                      variant="secondary"
+                      onClick={toggleMoveHistory}
+                      className="writing-vertical-rl lg:writing-mode-horizontal text-orientation-mixed p-2 h-32 lg:h-auto lg:w-full hover:bg-primary/20"
+                      title="Show Battle Chronicle"
+                    >
+                      <ApperIcon name="Scroll" className="w-4 h-4" />
+                      <span className="hidden lg:inline lg:ml-2">Show Battle Chronicle</span>
+                    </Button>
+                  </motion.div>
+                )}
+              </div>
+            )}
             
             {/* Center: Chess Board */}
-            <div className="flex justify-center" style={{ gridArea: 'center' }}>
+            <div className="flex justify-center order-1 lg:order-2">
               <div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 lg:p-6 shadow-2xl">
                 <ChessBoard
                   gameState={gameState}
