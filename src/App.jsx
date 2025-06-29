@@ -1,12 +1,12 @@
 import React from "react";
-import { Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import ChessGame from "@/components/pages/ChessGame";
 import Layout from "@/components/organisms/Layout";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <div className="min-h-screen bg-background text-white font-body">
         <Layout>
           <Routes>
@@ -27,7 +27,7 @@ function App() {
           className="z-50"
         />
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 
