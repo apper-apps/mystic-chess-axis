@@ -701,6 +701,24 @@ static async getHint(gameState, difficulty = 'medium') {
       console.error('Error getting hint:', error);
     }
 
-    return null;
+return null;
   }
 }
+
+// Named exports for easier importing
+export const createNewGame = () => ChessService.createNewGame();
+export const createInitialBoard = () => ChessService.createInitialBoard();
+export const getSquareNotation = (row, col) => ChessService.getSquareNotation(row, col);
+export const parseSquareNotation = (square) => ChessService.parseSquareNotation(square);
+export const isValidSquare = (row, col) => ChessService.isValidSquare(row, col);
+export const getLegalMoves = (gameState, square) => ChessService.getLegalMoves(gameState, square);
+export const makeMove = (gameState, fromSquare, toSquare) => ChessService.makeMove(gameState, fromSquare, toSquare);
+export const simulateMove = (gameState, fromSquare, toSquare) => ChessService.simulateMove(gameState, fromSquare, toSquare);
+export const isKingInCheck = (gameState, color) => ChessService.isKingInCheck(gameState, color);
+export const checkGameStatus = (gameState) => ChessService.checkGameStatus(gameState);
+export const undoLastMove = (gameState) => ChessService.undoLastMove(gameState);
+export const getAllPiecesWithMoves = (gameState, color) => ChessService.getAllPiecesWithMoves(gameState, color);
+export const getHint = (gameState, difficulty) => ChessService.getHint(gameState, difficulty);
+export const getMoveNotation = (gameState, fromSquare, toSquare, move, capturedPiece) => ChessService.getMoveNotation(gameState, fromSquare, toSquare, move, capturedPiece);
+export const generatePieceMoves = (gameState, row, col, piece) => ChessService.generatePieceMoves(gameState, row, col, piece);
+export const generatePieceAttacks = (gameState, row, col, piece) => ChessService.generatePieceAttacks(gameState, row, col, piece);
