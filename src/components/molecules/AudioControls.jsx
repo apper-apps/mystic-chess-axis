@@ -25,15 +25,15 @@ const AudioControls = ({ audioSettings, onAudioSettingsChange, disabled = false 
   const isMuted = audioSettings.masterVolume === 0;
 
   return (
-    <motion.div
+<motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-surface/30 backdrop-blur-sm rounded-lg border border-primary/20 p-4 space-y-4"
+      className="bg-surface/20 backdrop-blur-sm rounded-lg border border-primary/10 p-3 space-y-3"
     >
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-slate-200 flex items-center gap-2">
-          <ApperIcon name="Volume2" size={20} className="text-accent" />
-          Audio Settings
+<div className="flex items-center justify-between">
+        <h3 className="text-sm font-medium text-slate-200 flex items-center gap-2">
+          <ApperIcon name="Volume2" size={16} className="text-accent" />
+          Audio Controls
         </h3>
         <Button
           variant="ghost"
@@ -51,10 +51,10 @@ const AudioControls = ({ audioSettings, onAudioSettingsChange, disabled = false 
       </div>
 
       {/* Master Volume */}
-      <div className="space-y-2">
+<div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-sm text-slate-300 flex items-center gap-2">
-            <ApperIcon name="Volume2" size={14} />
+          <label className="text-xs text-slate-300 flex items-center gap-2">
+            <ApperIcon name="Volume2" size={12} />
             Master Volume
           </label>
           <span className="text-xs text-slate-400">
@@ -74,10 +74,10 @@ const AudioControls = ({ audioSettings, onAudioSettingsChange, disabled = false 
       </div>
 
       {/* Sound Effects */}
-      <div className="space-y-2">
+<div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-sm text-slate-300 flex items-center gap-2">
-            <ApperIcon name="Zap" size={14} />
+          <label className="text-xs text-slate-300 flex items-center gap-2">
+            <ApperIcon name="Zap" size={12} />
             Sound Effects
           </label>
           <button
@@ -123,10 +123,10 @@ const AudioControls = ({ audioSettings, onAudioSettingsChange, disabled = false 
       </div>
 
       {/* Ambient Music */}
-      <div className="space-y-2">
+<div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-sm text-slate-300 flex items-center gap-2">
-            <ApperIcon name="Music" size={14} />
+          <label className="text-xs text-slate-300 flex items-center gap-2">
+            <ApperIcon name="Music" size={12} />
             Ambient Music
           </label>
           <button
@@ -171,8 +171,8 @@ const AudioControls = ({ audioSettings, onAudioSettingsChange, disabled = false 
         )}
       </div>
 
-      <div className="text-xs text-slate-500 text-center pt-2 border-t border-primary/10">
-        Immersive fantasy audio experience
+<div className="text-xs text-slate-500 text-center pt-2 border-t border-primary/10">
+        Fantasy audio experience
       </div>
     </motion.div>
   );

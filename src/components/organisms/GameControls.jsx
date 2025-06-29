@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Button from '@/components/atoms/Button';
 import Select from '@/components/atoms/Select';
 import ApperIcon from '@/components/ApperIcon';
+import AudioControls from '@/components/molecules/AudioControls';
 
 const GameControls = ({
   onNewGame,
@@ -15,8 +16,11 @@ const GameControls = ({
   onPieceSetChange,
   canUndo,
   canHint,
-  disabled
+  disabled,
+  audioSettings,
+  onAudioSettingsChange
 }) => {
+  const [showAudioControls, setShowAudioControls] = useState(false);
   const difficultyOptions = [
     { value: 'easy', label: 'Apprentice (Easy)' },
     { value: 'medium', label: 'Warrior (Medium)' },
@@ -116,7 +120,40 @@ return (
             <span className="sm:hidden">Reset</span>
           </Button>
         </div>
-<div className="pt-2 sm:pt-3 lg:pt-4 border-t border-primary/20">
+{/* Audio Controls Section */}
+        <div className="pt-2 sm:pt-3 lg:pt-4 border-t border-primary/20">
+          <button
+            onClick={() => setShowAudioControls(!showAudioControls)}
+            disabled={disabled}
+            className="w-full flex items-center justify-between text-xs sm:text-sm font-medium text-slate-300 mb-2 hover:text-accent transition-colors disabled:opacity-50"
+          >
+            <span className="flex items-center">
+              <ApperIcon name="Music" className="w-3 sm:w-4 h-3 sm:h-4 mr-2" />
+              Audio Settings
+            </span>
+            <ApperIcon 
+              name={showAudioControls ? "ChevronUp" : "ChevronDown"} 
+              className="w-3 sm:w-4 h-3 sm:h-4 transition-transform" 
+            />
+          </button>
+          
+          {showAudioControls && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="mb-3"
+            >
+              <AudioControls
+                audioSettings={audioSettings}
+                onAudioSettingsChange={onAudioSettingsChange}
+                disabled={disabled}
+              />
+            </motion.div>
+          )}
+        </div>
+
+        <div className="pt-2 sm:pt-3 lg:pt-4 border-t border-primary/20">
           <h4 className="text-xs sm:text-sm font-medium text-slate-300 mb-2">Quick Tips</h4>
           <ul className="text-xs text-slate-400 space-y-1">
             <li>• Tap piece to select</li>

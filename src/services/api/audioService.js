@@ -4,8 +4,8 @@ export class AudioService {
   static instance = null;
   static sounds = {};
   static ambientMusic = null;
-  static settings = {
-    soundEnabled: true,
+static settings = {
+    soundEnabled: false,
     musicEnabled: true,
     soundVolume: 0.7,
     musicVolume: 0.3,
