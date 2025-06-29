@@ -454,9 +454,151 @@ export class ChessService {
     return false;
   }
 
-  static generatePieceAttacks(gameState, row, col, piece) {
-    const moves = this.generatePieceMoves(gameState, row, col, piece);
-    return moves.map(move => this.parseSquareNotation(move.to));
+static generatePieceAttacks(gameState, row, col, piece) {
+    // Generate raw attack patterns without legal move validation to prevent circular dependency
+    const attacks = [];
+    
+    switch (piece.type.toLowerCase()) {
+      case 'pawn':
+        attacks.push(...this.generatePawnAttacks(gameState, row, col, piece));
+        break;
+      case 'rook':
+        attacks.push(...this.generateRookAttacks(gameState, row, col, piece));
+        break;
+      case 'bishop':
+        attacks.push(...this.generateBishopAttacks(gameState, row, col, piece));
+        break;
+      case 'queen':
+        attacks.push(...this.generateQueenAttacks(gameState, row, col, piece));
+        break;
+      case 'king':
+        attacks.push(...this.generateKingAttacks(gameState, row, col, piece));
+        break;
+      case 'knight':
+        attacks.push(...this.generateKnightAttacks(gameState, row, col, piece));
+        break;
+    }
+    
+    return attacks.filter(attack => this.isValidSquare(attack.row, attack.col));
+  }
+
+  static generatePawnAttacks(gameState, row, col, piece) {
+    const attacks = [];
+    const direction = piece.color === 'white' ? -1 : 1;
+    
+    // Pawn attacks diagonally
+    const attackPositions = [
+      { row: row + direction, col: col - 1 },
+      { row: row + direction, col: col + 1 }
+    ];
+    
+    for (const pos of attackPositions) {
+      if (this.isValidSquare(pos.row, pos.col)) {
+        attacks.push(pos);
+      }
+    }
+    
+    return attacks;
+  }
+
+  static generateRookAttacks(gameState, row, col, piece) {
+    const attacks = [];
+    const directions = [
+      { row: -1, col: 0 }, // Up
+      { row: 1, col: 0 },  // Down
+      { row: 0, col: -1 }, // Left
+      { row: 0, col: 1 }   // Right
+    ];
+    
+    for (const dir of directions) {
+      for (let i = 1; i < 8; i++) {
+        const newRow = row + (dir.row * i);
+        const newCol = col + (dir.col * i);
+        
+        if (!this.isValidSquare(newRow, newCol)) break;
+        
+        attacks.push({ row: newRow, col: newCol });
+        
+        // Stop if we hit a piece
+        if (gameState.board[newRow][newCol]) break;
+      }
+    }
+    
+    return attacks;
+  }
+
+  static generateBishopAttacks(gameState, row, col, piece) {
+    const attacks = [];
+    const directions = [
+      { row: -1, col: -1 }, // Up-Left
+      { row: -1, col: 1 },  // Up-Right
+      { row: 1, col: -1 },  // Down-Left
+      { row: 1, col: 1 }    // Down-Right
+    ];
+    
+    for (const dir of directions) {
+      for (let i = 1; i < 8; i++) {
+        const newRow = row + (dir.row * i);
+        const newCol = col + (dir.col * i);
+        
+        if (!this.isValidSquare(newRow, newCol)) break;
+        
+        attacks.push({ row: newRow, col: newCol });
+        
+        // Stop if we hit a piece
+        if (gameState.board[newRow][newCol]) break;
+      }
+    }
+    
+    return attacks;
+  }
+
+  static generateQueenAttacks(gameState, row, col, piece) {
+    return [
+      ...this.generateRookAttacks(gameState, row, col, piece),
+      ...this.generateBishopAttacks(gameState, row, col, piece)
+    ];
+  }
+
+  static generateKingAttacks(gameState, row, col, piece) {
+    const attacks = [];
+    const directions = [
+      { row: -1, col: -1 }, { row: -1, col: 0 }, { row: -1, col: 1 },
+      { row: 0, col: -1 },                       { row: 0, col: 1 },
+      { row: 1, col: -1 },  { row: 1, col: 0 },  { row: 1, col: 1 }
+    ];
+    
+    for (const dir of directions) {
+      const newRow = row + dir.row;
+      const newCol = col + dir.col;
+      
+      if (this.isValidSquare(newRow, newCol)) {
+        attacks.push({ row: newRow, col: newCol });
+      }
+    }
+    
+    return attacks;
+  }
+
+  static generateKnightAttacks(gameState, row, col, piece) {
+    const attacks = [];
+    const knightMoves = [
+      { row: -2, col: -1 }, { row: -2, col: 1 },
+      { row: -1, col: -2 }, { row: -1, col: 2 },
+      { row: 1, col: -2 },  { row: 1, col: 2 },
+      { row: 2, col: -1 },  { row: 2, col: 1 }
+    ];
+    
+    for (const move of knightMoves) {
+      const newRow = row + move.row;
+      const newCol = col + move.col;
+      
+      if (this.isValidSquare(newRow, newCol)) {
+        attacks.push({ row: newRow, col: newCol });
+      }
+    }
+    
+    return attacks;
   }
 
   static checkGameStatus(gameState) {
