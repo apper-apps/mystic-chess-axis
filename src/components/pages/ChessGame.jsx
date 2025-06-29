@@ -10,7 +10,7 @@ import MoveHistory from "@/components/organisms/MoveHistory";
 import Button from "@/components/atoms/Button";
 import { ComputerPlayer, findBestMove } from "@/services/api/computerPlayer";
 import { ChessService, createNewGame, getHint, getLegalMoves, getSquareNotation, makeMove, undoLastMove } from "@/services/api/chessService";
-import { AudioService, cleanup, getInstance, getSettings, playCheck, playCheckmate, playMove, startAmbientMusic, updateSettings } from "@/services/api/audioService";
+import { AudioService, getSettings, playCheck, playCheckmate, playMove, startAmbientMusic, updateSettings } from "@/services/api/audioService";
 const ChessGame = () => {
   const [gameState, setGameState] = useState(null);
   const [selectedSquare, setSelectedSquare] = useState(null);
