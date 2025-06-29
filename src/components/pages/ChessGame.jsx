@@ -20,33 +20,22 @@ const ChessGame = () => {
   const [isComputerThinking, setIsComputerThinking] = useState(false);
   const [hintMove, setHintMove] = useState(null);
   const [hintCooldown, setHintCooldown] = useState(false);
-  const [audioSettings, setAudioSettings] = useState(AudioService.getSettings());
-useEffect(() => {
-    initializeGame();
-    
-    // Initialize audio service
-    AudioService.getInstance();
-    AudioService.startAmbientMusic();
-    
-    // Load saved piece set preference
-    const savedPieceSet = localStorage.getItem('mysticChess_pieceSet');
-    if (savedPieceSet && ['classic', 'dragons', 'wizards', 'warriors'].includes(savedPieceSet)) {
-      setPieceSet(savedPieceSet);
-    }
+const [audioSettings, setAudioSettings] = useState(AudioService.getSettings());
 
-    // Cleanup audio on unmount
-    return () => {
-      AudioService.cleanup();
-    };
+  useEffect(() => {
+    initializeGame();
   }, []);
 
   useEffect(() => {
     if (gameState && gameState.currentTurn === 'black' && gameState.gameStatus === 'active') {
       makeComputerMove();
     }
-  }, [gameState?.currentTurn, gameState?.gameStatus]);
+  }, [gameState]);
 
-const initializeGame = () => {
+  const initializeGame = () => {
+    const savedPieceSet = localStorage.getItem('chessPieceSet') || 'classic';
+    setPieceSet(savedPieceSet);
+    
     const newGame = ChessService.createNewGame();
     setGameState(newGame);
     setSelectedSquare(null);
@@ -58,45 +47,42 @@ const initializeGame = () => {
   };
 
   const makeComputerMove = async () => {
-    if (!gameState || gameState.currentTurn !== 'black' || isComputerThinking) return;
-
-    setIsComputerThinking(true);
-    
-    // Add thinking delay for realism
-    await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
+    if (!gameState || gameState.currentTurn !== 'black' || gameState.gameStatus !== 'active') return;
 
     try {
-const computerMove = ComputerPlayer.findBestMove(gameState, difficulty);
+      setIsComputerThinking(true);
       
-      if (computerMove) {
-        const updatedGame = ChessService.makeMove(gameState, computerMove.from, computerMove.to);
-        setGameState(updatedGame);
-        
-        // Play appropriate sound for computer move
-        const lastMove = updatedGame.moveHistory[updatedGame.moveHistory.length - 1];
-        if (lastMove?.captured) {
-          AudioService.playMove('capture');
-        } else {
-          AudioService.playMove('normal');
-        }
-        
-        if (updatedGame.gameStatus === 'checkmate') {
-          AudioService.playCheckmate();
-          toast.error("The dark forces have triumphed! Checkmate!");
-        } else if (updatedGame.gameStatus === 'check') {
-          AudioService.playCheck();
-          toast.warning("Your king is under attack!");
-        }
+      // Add thinking delay for realism
+      await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
+      
+      const computerMove = await findBestMove(gameState, 'black', difficulty);
+      
+      const updatedGame = ChessService.makeMove(gameState, computerMove.from, computerMove.to);
+      setGameState(updatedGame);
+      
+      // Play appropriate sound for computer move
+      const lastMove = updatedGame.moveHistory[updatedGame.moveHistory.length - 1];
+      if (lastMove?.captured) {
+        AudioService.playMove('capture');
+      } else {
+        AudioService.playMove('normal');
+      }
+      
+      if (updatedGame.gameStatus === 'checkmate') {
+        AudioService.playCheckmate();
+        toast.error("The dark forces have triumphed! Checkmate!");
+      } else if (updatedGame.gameStatus === 'check') {
+        AudioService.playCheck();
+        toast.warning("Your king is under attack!");
       }
     } catch (error) {
       console.error('Computer move error:', error);
-      toast.error("The dark magic faltered...");
+      toast.error("The computer's mystical powers have failed!");
     } finally {
       setIsComputerThinking(false);
     }
   };
-
-  const handleSquareClick = (row, col) => {
+const handleSquareClick = (row, col) => {
     if (!gameState || gameState.currentTurn !== 'white' || isComputerThinking) return;
 
     const square = ChessService.getSquareNotation(row, col);
@@ -104,12 +90,12 @@ const computerMove = ComputerPlayer.findBestMove(gameState, difficulty);
 
     // If clicking on a legal move destination
     if (selectedSquare && legalMoves.some(move => move.to === square)) {
-try {
+      try {
         const updatedGame = ChessService.makeMove(gameState, selectedSquare, square);
         setGameState(updatedGame);
         setSelectedSquare(null);
         setLegalMoves([]);
-
+        
         // Play appropriate sound for player move
         const lastMove = updatedGame.moveHistory[updatedGame.moveHistory.length - 1];
         if (lastMove?.captured) {
