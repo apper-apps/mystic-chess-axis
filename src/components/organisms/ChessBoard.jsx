@@ -37,24 +37,24 @@ const ChessBoard = ({
     );
   };
 
-  return (
+return (
     <div className="relative">
-      {/* Board coordinates */}
-      <div className="flex justify-center mb-2">
+      {/* Board coordinates - Top */}
+      <div className="flex justify-center mb-1 lg:mb-2">
         <div className="grid grid-cols-8 gap-0 w-fit">
           {['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].map((file, index) => (
-            <div key={file} className="w-16 text-center text-xs text-slate-400 font-medium">
+            <div key={file} className="w-10 sm:w-12 lg:w-16 text-center text-xs text-slate-400 font-medium">
               {file}
             </div>
           ))}
         </div>
       </div>
 
-      <div className="flex items-center">
-        {/* Rank numbers (left) */}
-        <div className="flex flex-col-reverse mr-2">
+      <div className="flex items-center justify-center">
+        {/* Rank numbers (left) - Hidden on mobile */}
+        <div className="hidden sm:flex flex-col-reverse mr-1 lg:mr-2">
           {[1, 2, 3, 4, 5, 6, 7, 8].map(rank => (
-            <div key={rank} className="h-16 flex items-center text-xs text-slate-400 font-medium">
+            <div key={rank} className="h-10 sm:h-12 lg:h-16 flex items-center text-xs text-slate-400 font-medium">
               {rank}
             </div>
           ))}
@@ -62,8 +62,7 @@ const ChessBoard = ({
 
         {/* Chess board */}
         <motion.div
-          className="grid grid-cols-8 border-4 border-primary/30 rounded-lg overflow-hidden shadow-2xl"
-          style={{ width: '512px', height: '512px' }}
+          className="grid grid-cols-8 border-2 lg:border-4 border-primary/30 rounded-lg overflow-hidden shadow-2xl w-80 h-80 sm:w-96 sm:h-96 lg:w-[512px] lg:h-[512px]"
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
@@ -73,10 +72,10 @@ const ChessBoard = ({
           )}
         </motion.div>
 
-        {/* Rank numbers (right) */}
-        <div className="flex flex-col-reverse ml-2">
+        {/* Rank numbers (right) - Hidden on mobile */}
+        <div className="hidden sm:flex flex-col-reverse ml-1 lg:ml-2">
           {[1, 2, 3, 4, 5, 6, 7, 8].map(rank => (
-            <div key={rank} className="h-16 flex items-center text-xs text-slate-400 font-medium">
+            <div key={rank} className="h-10 sm:h-12 lg:h-16 flex items-center text-xs text-slate-400 font-medium">
               {rank}
             </div>
           ))}
@@ -84,16 +83,15 @@ const ChessBoard = ({
       </div>
 
       {/* Bottom coordinates */}
-      <div className="flex justify-center mt-2">
+      <div className="flex justify-center mt-1 lg:mt-2">
         <div className="grid grid-cols-8 gap-0 w-fit">
           {['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].map((file, index) => (
-            <div key={file} className="w-16 text-center text-xs text-slate-400 font-medium">
+            <div key={file} className="w-10 sm:w-12 lg:w-16 text-center text-xs text-slate-400 font-medium">
               {file}
             </div>
           ))}
         </div>
       </div>
-
       {/* Computer thinking overlay */}
       {isComputerThinking && (
         <motion.div

@@ -50,28 +50,28 @@ const CapturedPieces = ({ capturedPieces }) => {
 
   const materialAdvantage = calculateMaterialAdvantage();
 
-  return (
+return (
     <motion.div
-      className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-6 shadow-xl"
+      className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-4 lg:p-6 shadow-xl"
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: 0.1 }}
     >
-      <h3 className="text-lg font-display font-semibold mb-4 flex items-center text-white">
-        <ApperIcon name="Trophy" className="w-5 h-5 mr-2 text-accent" />
+      <h3 className="text-base lg:text-lg font-display font-semibold mb-3 lg:mb-4 flex items-center text-white">
+        <ApperIcon name="Trophy" className="w-4 lg:w-5 h-4 lg:h-5 mr-2 text-accent" />
         Fallen Warriors
       </h3>
 
-      <div className="space-y-4">
+      <div className="space-y-3 lg:space-y-4">
         {/* Captured by You (Black pieces) */}
-        <div className="space-y-2">
+        <div className="space-y-1 lg:space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-slate-300">Your Captures:</span>
+            <span className="text-xs lg:text-sm font-medium text-slate-300">Your Captures:</span>
             <span className="text-xs text-accent">
-              {capturedPieces.black.length} pieces
+              {capturedPieces.black.length}
             </span>
           </div>
-          <div className="min-h-8 p-2 bg-secondary/30 rounded border border-primary/10">
+          <div className="min-h-6 lg:min-h-8 p-1 lg:p-2 bg-secondary/30 rounded border border-primary/10">
             {capturedPieces.black.length > 0 ? (
               renderCapturedPieces(capturedPieces.black, 'black')
             ) : (
@@ -81,14 +81,14 @@ const CapturedPieces = ({ capturedPieces }) => {
         </div>
 
         {/* Captured by Computer (White pieces) */}
-        <div className="space-y-2">
+        <div className="space-y-1 lg:space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-slate-300">Enemy Captures:</span>
+            <span className="text-xs lg:text-sm font-medium text-slate-300">Enemy Captures:</span>
             <span className="text-xs text-error">
-              {capturedPieces.white.length} pieces
+              {capturedPieces.white.length}
             </span>
           </div>
-          <div className="min-h-8 p-2 bg-secondary/30 rounded border border-primary/10">
+          <div className="min-h-6 lg:min-h-8 p-1 lg:p-2 bg-secondary/30 rounded border border-primary/10">
             {capturedPieces.white.length > 0 ? (
               renderCapturedPieces(capturedPieces.white, 'white')
             ) : (
@@ -99,17 +99,17 @@ const CapturedPieces = ({ capturedPieces }) => {
 
         {/* Material Advantage */}
         {(capturedPieces.white.length > 0 || capturedPieces.black.length > 0) && (
-          <div className="pt-3 border-t border-primary/20">
+          <div className="pt-2 lg:pt-3 border-t border-primary/20">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-slate-300">Material Balance:</span>
-              <div className="flex items-center space-x-2">
+              <span className="text-xs lg:text-sm text-slate-300">Balance:</span>
+              <div className="flex items-center space-x-1 lg:space-x-2">
                 {materialAdvantage !== 0 && (
                   <ApperIcon 
                     name={materialAdvantage > 0 ? "TrendingUp" : "TrendingDown"} 
-                    className={`w-4 h-4 ${materialAdvantage > 0 ? 'text-success' : 'text-error'}`} 
+                    className={`w-3 lg:w-4 h-3 lg:h-4 ${materialAdvantage > 0 ? 'text-success' : 'text-error'}`} 
                   />
                 )}
-                <span className={`font-bold text-sm ${
+                <span className={`font-bold text-xs lg:text-sm ${
                   materialAdvantage > 0 ? 'text-success' : 
                   materialAdvantage < 0 ? 'text-error' : 'text-slate-400'
                 }`}>
@@ -119,7 +119,7 @@ const CapturedPieces = ({ capturedPieces }) => {
               </div>
             </div>
             {materialAdvantage !== 0 && (
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-400 mt-1 hidden lg:block">
                 {materialAdvantage > 0 ? 'You have the advantage!' : 'Computer leads in material'}
               </p>
             )}

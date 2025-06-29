@@ -142,27 +142,26 @@ const ChessGame = () => {
     );
   }
 
-  return (
+return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       className="max-w-7xl mx-auto"
     >
-      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-        {/* Left Sidebar - Game Status & Captured Pieces */}
-        <div className="xl:col-span-1 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
+        {/* Game Status - Mobile First, Desktop Left */}
+        <div className="lg:col-span-1 order-1 lg:order-1">
           <GameStatus 
             gameState={gameState} 
             isComputerThinking={isComputerThinking}
             difficulty={difficulty}
           />
-          <CapturedPieces capturedPieces={gameState.capturedPieces} />
         </div>
 
-        {/* Main Chess Board */}
-        <div className="xl:col-span-2">
-          <div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-6 shadow-2xl">
+        {/* Main Chess Board - Mobile Second, Desktop Center */}
+        <div className="lg:col-span-2 order-2 lg:order-2">
+          <div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 lg:p-6 shadow-2xl">
             <ChessBoard
               gameState={gameState}
               selectedSquare={selectedSquare}
@@ -173,8 +172,8 @@ const ChessGame = () => {
           </div>
         </div>
 
-        {/* Right Sidebar - Controls & History */}
-        <div className="xl:col-span-1 space-y-6">
+        {/* Game Controls - Mobile Third, Desktop Right Top */}
+        <div className="lg:col-span-1 order-3 lg:order-3">
           <GameControls
             onNewGame={handleNewGame}
             onUndo={handleUndo}
@@ -183,6 +182,15 @@ const ChessGame = () => {
             canUndo={gameState.moveHistory.length >= 2}
             disabled={isComputerThinking}
           />
+        </div>
+
+        {/* Captured Pieces - Mobile Fourth, Desktop Left Bottom */}
+        <div className="lg:col-span-1 order-4 lg:order-1 lg:row-start-2">
+          <CapturedPieces capturedPieces={gameState.capturedPieces} />
+        </div>
+
+        {/* Move History - Mobile Fifth, Desktop Right Bottom */}
+        <div className="lg:col-span-1 order-5 lg:order-3 lg:row-start-2">
           <MoveHistory moves={gameState.moveHistory} />
         </div>
       </div>
