@@ -162,6 +162,11 @@ export class ComputerPlayer {
     const topScore = allMoves[0].score;
     const topMoves = allMoves.filter(move => move.score >= topScore - 20);
     
-    return topMoves[Math.floor(Math.random() * topMoves.length)];
+return topMoves[Math.floor(Math.random() * topMoves.length)];
   }
 }
+
+// Export standalone function for direct import usage
+export const findBestMove = (gameState, difficulty) => {
+  return ComputerPlayer.findBestMove(gameState, difficulty);
+};

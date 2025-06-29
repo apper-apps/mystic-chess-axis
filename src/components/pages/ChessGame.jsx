@@ -8,7 +8,7 @@ import GameStatus from "@/components/organisms/GameStatus";
 import CapturedPieces from "@/components/organisms/CapturedPieces";
 import MoveHistory from "@/components/organisms/MoveHistory";
 import Button from "@/components/atoms/Button";
-import { ComputerPlayer, findBestMove } from "@/services/api/computerPlayer";
+import { findBestMove } from '@/services/api/computerPlayer'
 import { ChessService, createNewGame, getHint, getLegalMoves, getSquareNotation, makeMove, undoLastMove } from "@/services/api/chessService";
 import { AudioService, getSettings, playCheck, playCheckmate, playMove, startAmbientMusic, updateSettings } from "@/services/api/audioService";
 const ChessGame = () => {
