@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { toast } from 'react-toastify';
-import ChessBoard from '@/components/organisms/ChessBoard';
-import GameControls from '@/components/organisms/GameControls';
-import MoveHistory from '@/components/organisms/MoveHistory';
-import GameStatus from '@/components/organisms/GameStatus';
-import CapturedPieces from '@/components/organisms/CapturedPieces';
-import { ChessService } from '@/services/api/chessService';
-import { ComputerPlayer } from '@/services/api/computerPlayer';
-import { AudioService } from '@/services/api/audioService';
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+import ApperIcon from "@/components/ApperIcon";
+import ChessBoard from "@/components/organisms/ChessBoard";
+import GameControls from "@/components/organisms/GameControls";
+import GameStatus from "@/components/organisms/GameStatus";
+import CapturedPieces from "@/components/organisms/CapturedPieces";
+import MoveHistory from "@/components/organisms/MoveHistory";
+import Button from "@/components/atoms/Button";
+import { ComputerPlayer, findBestMove } from "@/services/api/computerPlayer";
+import { ChessService, createNewGame, getHint, getLegalMoves, getSquareNotation, makeMove, undoLastMove } from "@/services/api/chessService";
+import { AudioService, cleanup, getInstance, getSettings, playCheck, playCheckmate, playMove, startAmbientMusic, updateSettings } from "@/services/api/audioService";
 const ChessGame = () => {
   const [gameState, setGameState] = useState(null);
   const [selectedSquare, setSelectedSquare] = useState(null);
@@ -182,11 +184,8 @@ try {
       wizards: 'Mystic Wizard pieces',
       warriors: 'Epic Warrior pieces'
     };
-    
-    toast.success(`Piece style changed to ${pieceSetNames[newPieceSet]}!`);
 toast.success(`Piece style changed to ${pieceSetNames[newPieceSet]}!`);
   };
-
   const handleHint = async () => {
     if (!gameState || gameState.currentTurn !== 'white' || isComputerThinking || hintCooldown) return;
 
@@ -262,7 +261,7 @@ return (
       transition={{ duration: 0.6 }}
       className="w-full mx-auto"
     >
-      <div className="flex flex-col space-y-4 lg:space-y-6">
+<div className="flex flex-col space-y-4 lg:space-y-6">
         {/* Top Section: Horizontal Battle Status */}
         <div className="w-full">
           <GameStatus 
@@ -272,7 +271,63 @@ return (
           />
         </div>
 
-{/* Center Section: Chess Board with Side Panels */}
+        {/* Quick Action Bar */}
+        <div className="w-full flex justify-center">
+          <div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 shadow-xl">
+            <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
+              <Button
+                variant="primary"
+                onClick={handleNewGame}
+                disabled={isComputerThinking}
+                size="sm"
+                className="btn-magical text-xs sm:text-sm lg:text-base"
+              >
+                <ApperIcon name="Swords" className="w-3 sm:w-4 h-3 sm:h-4 mr-1 lg:mr-2" />
+                <span className="hidden sm:inline">New Battle</span>
+                <span className="sm:hidden">New</span>
+              </Button>
+
+              <Button
+                variant="secondary"
+                onClick={handleUndo}
+                disabled={!gameState || gameState.moveHistory.length < 2 || isComputerThinking}
+                size="sm"
+                className="hover:bg-warning/20 hover:text-warning text-xs sm:text-sm lg:text-base"
+              >
+                <ApperIcon name="Undo" className="w-3 sm:w-4 h-3 sm:h-4 mr-1 lg:mr-2" />
+                <span className="hidden sm:inline">Undo Move</span>
+                <span className="sm:hidden">Undo</span>
+              </Button>
+
+              <Button
+                variant="accent"
+                onClick={handleHint}
+                disabled={!gameState || gameState.currentTurn !== 'white' || hintCooldown || isComputerThinking}
+                size="sm"
+                className="hover:bg-info/20 hover:text-info text-xs sm:text-sm lg:text-base"
+                title={(!gameState || gameState.currentTurn !== 'white' || hintCooldown) ? "Hint on cooldown or not your turn" : "Get a mystical hint"}
+              >
+                <ApperIcon name="Lightbulb" className="w-3 sm:w-4 h-3 sm:h-4 mr-1 lg:mr-2" />
+                <span className="hidden sm:inline">Get Hint</span>
+                <span className="sm:hidden">Hint</span>
+              </Button>
+
+              <Button
+                variant="destructive"
+                onClick={handleReset}
+                disabled={isComputerThinking}
+                size="sm"
+                className="hover:bg-error/20 hover:text-error text-xs sm:text-sm lg:text-base"
+              >
+                <ApperIcon name="RotateCcw" className="w-3 sm:w-4 h-3 sm:h-4 mr-1 lg:mr-2" />
+                <span className="hidden sm:inline">Reset</span>
+                <span className="sm:hidden">Reset</span>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Center Section: Chess Board with Side Panels */}
         <div className="flex flex-col lg:flex-row gap-3 lg:gap-4 items-start">
           {/* Left: Fallen Warriors (Captured Pieces) */}
           <div className="w-full lg:w-96 lg:flex-shrink-0 order-2 lg:order-1">

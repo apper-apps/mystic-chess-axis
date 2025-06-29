@@ -91,56 +91,6 @@ return (
             />
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2 lg:gap-3">
-            <Button
-              variant="primary"
-              onClick={onNewGame}
-              disabled={disabled}
-              size="sm"
-              className="btn-magical text-xs sm:text-sm lg:text-base"
-            >
-              <ApperIcon name="Swords" className="w-3 sm:w-4 h-3 sm:h-4 mr-1 lg:mr-2" />
-              <span className="hidden sm:inline">New Battle</span>
-              <span className="sm:hidden">New</span>
-            </Button>
-
-            <Button
-              variant="secondary"
-              onClick={onUndo}
-              disabled={!canUndo || disabled}
-              size="sm"
-              className="hover:bg-warning/20 hover:text-warning text-xs sm:text-sm lg:text-base"
-            >
-              <ApperIcon name="Undo" className="w-3 sm:w-4 h-3 sm:h-4 mr-1 lg:mr-2" />
-              <span className="hidden sm:inline">Undo Move</span>
-              <span className="sm:hidden">Undo</span>
-            </Button>
-
-            <Button
-              variant="accent"
-              onClick={onHint}
-              disabled={!canHint || disabled}
-              size="sm"
-              className="hover:bg-info/20 hover:text-info text-xs sm:text-sm lg:text-base"
-              title={!canHint ? "Hint on cooldown or not your turn" : "Get a mystical hint"}
-            >
-              <ApperIcon name="Lightbulb" className="w-3 sm:w-4 h-3 sm:h-4 mr-1 lg:mr-2" />
-              <span className="hidden sm:inline">Get Hint</span>
-              <span className="sm:hidden">Hint</span>
-            </Button>
-
-            <Button
-              variant="destructive"
-              onClick={onReset}
-              disabled={disabled}
-              size="sm"
-              className="hover:bg-error/20 hover:text-error text-xs sm:text-sm lg:text-base"
-            >
-              <ApperIcon name="RotateCcw" className="w-3 sm:w-4 h-3 sm:h-4 mr-1 lg:mr-2" />
-              <span className="hidden sm:inline">Reset</span>
-              <span className="sm:hidden">Reset</span>
-            </Button>
-          </div>
 
           {/* Audio Controls Section */}
           <div className="pt-2 sm:pt-3 lg:pt-4 border-t border-primary/20">
