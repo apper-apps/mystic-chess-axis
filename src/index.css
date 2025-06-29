@@ -18,10 +18,26 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #7c3aed;
+  background: #8b5cf6;
 }
 
-/* Chess board styles */
+.chess-square {
+  min-height: 36px;
+  min-width: 36px;
+}
+
+.chess-square.light {
+  background-color: #f0d9b5;
+}
+
+.chess-square.dark {
+  background-color: #b58863;
+}
+
+.chess-square.selected {
+  background-color: #ffff00 !important;
+  box-shadow: inset 0 0 0 3px #ff6b35;
+}
 .chess-square {
   @apply relative flex items-center justify-center transition-all duration-200;
   min-height: 35px;
@@ -229,7 +245,7 @@ left: 50%;
 }
 
 @media (min-width: 1024px) {
-  .chess-piece.fantasy-piece {
+.chess-piece.fantasy-piece {
     font-size: 2rem;
   }
 }
