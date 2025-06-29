@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import ApperIcon from '@/components/ApperIcon';
 import { formatDistanceToNow } from 'date-fns';
 
-const MoveHistory = ({ moves }) => {
+const MoveHistory = ({ moves, isCollapsed = false, onToggle }) => {
   const movePairs = [];
   for (let i = 0; i < moves.length; i += 2) {
     movePairs.push({
@@ -15,26 +15,39 @@ const MoveHistory = ({ moves }) => {
 
 return (
     <motion.div
-      className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-4 lg:p-5 shadow-xl w-full"
+      className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 shadow-xl w-full h-full flex flex-col"
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
     >
-      <h3 className="text-base lg:text-lg font-display font-semibold mb-4 flex items-center text-white">
-        <ApperIcon name="Scroll" className="w-5 h-5 mr-2 text-accent" />
-        Battle Chronicle
-      </h3>
+      <div className="flex items-center justify-between p-4 lg:p-5 border-b border-primary/20">
+        <h3 className="text-base lg:text-lg font-display font-semibold flex items-center text-white">
+          <ApperIcon name="Scroll" className="w-5 h-5 mr-2 text-accent" />
+          Battle Chronicle
+        </h3>
+        {onToggle && (
+          <motion.button
+            onClick={onToggle}
+            className="p-1 rounded-lg hover:bg-primary/20 transition-colors"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            title="Hide Battle Chronicle"
+          >
+            <ApperIcon name="ChevronRight" className="w-4 h-4 text-slate-400" />
+          </motion.button>
+        )}
+      </div>
 
-<div className="max-h-60 lg:max-h-72 overflow-y-auto custom-scrollbar">
-        {movePairs.length === 0 ? (
-          <div className="text-center py-8">
-            <ApperIcon name="BookOpen" className="w-12 h-12 text-slate-500 mx-auto mb-3" />
-            <p className="text-sm text-slate-400">Chronicle awaits your first move...</p>
-          </div>
-        ) : (
-          <div className="space-y-2">
-            {movePairs.map((pair, index) => (
-<motion.div
+      <div className="flex-1 overflow-y-auto p-4 lg:p-5">
+        <div className="space-y-2">
+          {movePairs.length === 0 ? (
+            <div className="text-center py-8">
+              <ApperIcon name="BookOpen" className="w-12 h-12 text-slate-500 mx-auto mb-3" />
+              <p className="text-sm text-slate-400">Chronicle awaits your first move...</p>
+            </div>
+          ) : (
+            movePairs.map((pair, index) => (
+              <motion.div
                 key={index}
                 className="flex items-center justify-between p-2 rounded-lg hover:bg-primary/10 transition-colors"
                 initial={{ opacity: 0, y: 10 }}
@@ -59,19 +72,19 @@ return (
                   </div>
                 </div>
 
-{pair.white?.captured && (
+                {pair.white?.captured && (
                   <div className="text-error text-sm">
                     <ApperIcon name="Sword" className="w-4 h-4" />
                   </div>
                 )}
               </motion.div>
-            ))}
-          </div>
-        )}
+            ))
+          )}
+        </div>
       </div>
 
       {moves.length > 0 && (
-        <div className="mt-4 pt-4 border-t border-primary/20 text-sm text-slate-400">
+        <div className="p-4 lg:p-5 border-t border-primary/20 text-sm text-slate-400">
           Last move: {formatDistanceToNow(moves[moves.length - 1]?.timestamp || Date.now(), { addSuffix: true })}
         </div>
       )}

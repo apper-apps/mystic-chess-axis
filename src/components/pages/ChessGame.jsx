@@ -20,8 +20,13 @@ const ChessGame = () => {
   const [isComputerThinking, setIsComputerThinking] = useState(false);
   const [hintMove, setHintMove] = useState(null);
   const [hintCooldown, setHintCooldown] = useState(false);
-const [audioSettings, setAudioSettings] = useState(AudioService.getSettings());
-
+  const [audioSettings, setAudioSettings] = useState(AudioService.getSettings());
+  const [showCapturedPieces, setShowCapturedPieces] = useState(() => {
+    return localStorage.getItem('mysticChess_showCapturedPieces') !== 'false';
+  });
+  const [showMoveHistory, setShowMoveHistory] = useState(() => {
+    return localStorage.getItem('mysticChess_showMoveHistory') !== 'false';
+  });
   useEffect(() => {
     initializeGame();
   }, []);
@@ -167,12 +172,27 @@ setIsComputerThinking(false);
     const pieceSetNames = {
       classic: 'Classic Chess pieces',
       dragons: 'Ancient Dragon pieces',
-      wizards: 'Mystic Wizard pieces',
-      warriors: 'Epic Warrior pieces'
+warriors: 'Epic Warrior pieces'
     };
-toast.success(`Piece style changed to ${pieceSetNames[newPieceSet]}!`);
+    toast.success(`Piece style changed to ${pieceSetNames[newPieceSet]}!`);
   };
+
+  const toggleCapturedPieces = () => {
+    const newValue = !showCapturedPieces;
+    setShowCapturedPieces(newValue);
+    localStorage.setItem('mysticChess_showCapturedPieces', newValue.toString());
+    toast.info(`Fallen Warriors ${newValue ? 'revealed' : 'hidden'}`);
+  };
+
+  const toggleMoveHistory = () => {
+    const newValue = !showMoveHistory;
+    setShowMoveHistory(newValue);
+    localStorage.setItem('mysticChess_showMoveHistory', newValue.toString());
+    toast.info(`Battle Chronicle ${newValue ? 'revealed' : 'hidden'}`);
+  };
+
   const handleHint = async () => {
+    if (!gameState || gameState.currentTurn !== 'white' || isComputerThinking || hintCooldown) return;
     if (!gameState || gameState.currentTurn !== 'white' || isComputerThinking || hintCooldown) return;
 
     setHintCooldown(true);
@@ -312,31 +332,81 @@ transition={{ duration: 0.6 }}
           </div>
         </div>
 
-        {/* Center Section: Chess Board with Side Panels */}
-        <div className="flex flex-col lg:flex-row gap-3 lg:gap-4 items-start">
-          {/* Left: Fallen Warriors (Captured Pieces) */}
-          <div className="w-full lg:w-96 lg:flex-shrink-0 order-2 lg:order-1">
-            <CapturedPieces capturedPieces={gameState.capturedPieces} />
-          </div>
-          
-          {/* Center: Chess Board */}
-          <div className="flex-1 flex justify-center order-1 lg:order-2 min-w-0">
-            <div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 lg:p-6 shadow-2xl">
-              <ChessBoard
-                gameState={gameState}
-                selectedSquare={selectedSquare}
-                legalMoves={legalMoves}
-                hintMove={hintMove}
-                onSquareClick={handleSquareClick}
-                isComputerThinking={isComputerThinking}
-                pieceSet={pieceSet}
-              />
+{/* Center Section: Chess Board with Side Panels */}
+        <div className="w-full">
+          <div 
+            className="grid gap-3 lg:gap-4 items-start"
+            style={{
+              gridTemplateColumns: `${showCapturedPieces ? 'minmax(280px, 1fr)' : 'auto'} minmax(0, 2fr) ${showMoveHistory ? 'minmax(280px, 1fr)' : 'auto'}`,
+              gridTemplateAreas: '"left center right"'
+            }}
+          >
+            {/* Left: Fallen Warriors (Captured Pieces) */}
+            <div className="flex flex-col" style={{ gridArea: 'left' }}>
+              {showCapturedPieces ? (
+                <CapturedPieces 
+                  capturedPieces={gameState.capturedPieces}
+                  isCollapsed={false}
+                  onToggle={toggleCapturedPieces}
+                />
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="flex justify-center"
+                >
+                  <Button
+                    variant="secondary"
+                    onClick={toggleCapturedPieces}
+                    className="writing-vertical-rl text-orientation-mixed p-2 h-32 hover:bg-primary/20"
+                    title="Show Fallen Warriors"
+                  >
+                    <ApperIcon name="Trophy" className="w-4 h-4" />
+                  </Button>
+                </motion.div>
+              )}
             </div>
-          </div>
-          
-          {/* Right: Battle Chronicle (Move History) */}
-          <div className="w-full lg:w-96 lg:flex-shrink-0 order-3">
-            <MoveHistory moves={gameState.moveHistory} />
+            
+            {/* Center: Chess Board */}
+            <div className="flex justify-center" style={{ gridArea: 'center' }}>
+              <div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 lg:p-6 shadow-2xl">
+                <ChessBoard
+                  gameState={gameState}
+                  selectedSquare={selectedSquare}
+                  legalMoves={legalMoves}
+                  hintMove={hintMove}
+                  onSquareClick={handleSquareClick}
+                  isComputerThinking={isComputerThinking}
+                  pieceSet={pieceSet}
+                />
+              </div>
+            </div>
+            
+            {/* Right: Battle Chronicle (Move History) */}
+            <div className="flex flex-col" style={{ gridArea: 'right' }}>
+              {showMoveHistory ? (
+                <MoveHistory 
+                  moves={gameState.moveHistory}
+                  isCollapsed={false}
+                  onToggle={toggleMoveHistory}
+                />
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="flex justify-center"
+                >
+                  <Button
+                    variant="secondary"
+                    onClick={toggleMoveHistory}
+                    className="writing-vertical-rl text-orientation-mixed p-2 h-32 hover:bg-primary/20"
+                    title="Show Battle Chronicle"
+                  >
+                    <ApperIcon name="Scroll" className="w-4 h-4" />
+                  </Button>
+                </motion.div>
+              )}
+            </div>
           </div>
         </div>
 
