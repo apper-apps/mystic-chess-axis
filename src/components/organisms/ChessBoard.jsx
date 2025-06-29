@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import ChessSquare from "@/components/molecules/ChessSquare";
-import { ChessService, getSquareNotation } from "@/services/api/chessService";
+import { ChessService } from "@/services/api/chessService";
 
 const ChessBoard = ({ 
   gameState, 
