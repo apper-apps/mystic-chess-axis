@@ -151,17 +151,18 @@ left: 50%;
   height: 80%;
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
 }
-
 @media (min-width: 640px) {
   .chess-piece {
-    font-size: 2rem;
+    font-size: 1.875rem;
   }
 }
 
 @media (min-width: 1024px) {
   .chess-piece {
-    font-size: 2.25rem;
+    font-size: 2.125rem;
   }
 }
 
@@ -268,12 +269,12 @@ left: 50%;
 
 @media (min-width: 640px) {
   .chess-piece.fantasy-piece {
-    font-size: 1.8rem;
+    font-size: 1.75rem;
   }
 }
 
 @media (min-width: 1024px) {
-.chess-piece.fantasy-piece {
+  .chess-piece.fantasy-piece {
     font-size: 2rem;
   }
 }
