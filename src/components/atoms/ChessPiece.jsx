@@ -59,11 +59,10 @@ const pieceClasses = [
       whileHover={!disabled ? { scale: 1.1 } : {}}
       whileTap={!disabled ? { scale: 0.95 } : {}}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      style={{
+style={{
         filter: isFantasySet 
           ? `drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(107, 70, 193, 0.3))`
-          : 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5))',
-        fontSize: isFantasySet ? '1.2rem' : undefined
+          : 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5))'
       }}
     >
       {symbol}
