@@ -232,6 +232,16 @@ static settings = {
 
     this.sounds = {};
     this.ambientMusic = null;
-    this.instance = null;
+this.instance = null;
   }
 }
+
+// Named exports for individual functions (delegates to static methods)
+export const cleanup = () => AudioService.cleanup();
+export const getInstance = () => AudioService.getInstance();
+export const getSettings = () => AudioService.getSettings();
+export const playCheck = () => AudioService.playCheck();
+export const playCheckmate = () => AudioService.playCheckmate();
+export const playMove = (moveType) => AudioService.playMove(moveType);
+export const startAmbientMusic = () => AudioService.startAmbientMusic();
+export const updateSettings = (settings) => AudioService.updateSettings(settings);
