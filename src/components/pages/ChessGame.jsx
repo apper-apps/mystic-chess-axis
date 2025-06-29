@@ -38,7 +38,7 @@ const [audioSettings, setAudioSettings] = useState(AudioService.getSettings());
     
     const newGame = ChessService.createNewGame();
     setGameState(newGame);
-    setSelectedSquare(null);
+setSelectedSquare(null);
     setLegalMoves([]);
     toast.success("A new mystical battle begins!");
     
@@ -79,10 +79,11 @@ const [audioSettings, setAudioSettings] = useState(AudioService.getSettings());
       console.error('Computer move error:', error);
       toast.error("The computer's mystical powers have failed!");
     } finally {
-      setIsComputerThinking(false);
+setIsComputerThinking(false);
     }
   };
-const handleSquareClick = (row, col) => {
+
+  const handleSquareClick = (row, col) => {
     if (!gameState || gameState.currentTurn !== 'white' || isComputerThinking) return;
 
     const square = ChessService.getSquareNotation(row, col);
@@ -155,11 +156,10 @@ const handleSquareClick = (row, col) => {
       if (window.confirm("Start a new mystical battle? Current progress will be lost.")) {
         initializeGame();
       }
-    } else {
+} else {
       initializeGame();
     }
-};
-
+  };
   const handlePieceSetChange = (newPieceSet) => {
     setPieceSet(newPieceSet);
     localStorage.setItem('mysticChess_pieceSet', newPieceSet);
@@ -208,11 +208,10 @@ toast.success(`Piece style changed to ${pieceSetNames[newPieceSet]}!`);
       setSelectedSquare(null);
       setLegalMoves([]);
       setHintMove(null);
-      setHintCooldown(false);
+setHintCooldown(false);
       toast.success("The battlefield has been reset by ancient magic!");
     }
-};
-
+  };
   const handleAudioSettingsChange = (newSettings) => {
     AudioService.updateSettings(newSettings);
     setAudioSettings(AudioService.getSettings());
@@ -237,17 +236,17 @@ toast.success(`Piece style changed to ${pieceSetNames[newPieceSet]}!`);
           <p className="text-lg text-slate-300">Preparing the mystical battlefield...</p>
         </div>
       </div>
-    );
+);
   }
 
-return (
+  return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+transition={{ duration: 0.6 }}
       className="w-full mx-auto"
     >
-<div className="flex flex-col space-y-4 lg:space-y-6">
+      <div className="flex flex-col space-y-4 lg:space-y-6">
         {/* Top Section: Horizontal Battle Status */}
         <div className="w-full">
           <GameStatus 
