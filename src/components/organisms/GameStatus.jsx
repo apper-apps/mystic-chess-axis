@@ -85,15 +85,15 @@ return (
             <ApperIcon
                 name={getStatusIcon()}
                 className={`w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 ${getStatusColor()} flex-shrink-0`} />
-            <div className="flex-1 min-w-0">
+<div className="flex-1">
                 <p
-                    className={`text-xs sm:text-sm lg:text-base font-medium ${getStatusColor()} truncate`}>
+                    className={`text-xs sm:text-sm lg:text-base font-medium ${getStatusColor()} break-words`}>
                     {getStatusText()}
                 </p>
                 {isComputerThinking && <div className="flex items-center mt-1">
                     <div
                         className="w-2 h-2 bg-accent rounded-full animate-pulse mr-2 flex-shrink-0"></div>
-                    <span className="text-xs text-slate-400 truncate">Calculating...</span>
+                    <span className="text-xs text-slate-400">Calculating...</span>
                 </div>}
             </div>
         </div>
@@ -117,7 +117,7 @@ return (
                     {difficultyInfo.name}
                 </span>
             </div>
-            <p className="text-xs text-slate-400 hidden lg:block">{difficultyInfo.description}</p>
+<p className="text-xs text-slate-400 break-words">{difficultyInfo.description}</p>
         </div>
         {/* Game Stats */}
         {/* Game Stats */}

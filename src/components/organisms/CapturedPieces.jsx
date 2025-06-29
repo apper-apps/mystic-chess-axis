@@ -52,12 +52,12 @@ const CapturedPieces = ({ capturedPieces }) => {
 
 return (
     <motion.div
-      className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-4 lg:p-6 shadow-xl"
+      className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 sm:p-4 lg:p-6 shadow-xl"
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: 0.1 }}
     >
-      <h3 className="text-base lg:text-lg font-display font-semibold mb-3 lg:mb-4 flex items-center text-white">
+<h3 className="text-sm sm:text-base lg:text-lg font-display font-semibold mb-3 lg:mb-4 flex items-center text-white">
         <ApperIcon name="Trophy" className="w-4 lg:w-5 h-4 lg:h-5 mr-2 text-accent" />
         Fallen Warriors
       </h3>

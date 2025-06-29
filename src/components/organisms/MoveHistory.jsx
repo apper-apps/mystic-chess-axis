@@ -15,21 +15,21 @@ const MoveHistory = ({ moves }) => {
 
 return (
     <motion.div
-      className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-4 lg:p-6 shadow-xl"
+      className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 sm:p-4 lg:p-6 shadow-xl w-full"
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
     >
-      <h3 className="text-base lg:text-lg font-display font-semibold mb-3 lg:mb-4 flex items-center text-white">
+<h3 className="text-sm sm:text-base lg:text-lg font-display font-semibold mb-3 lg:mb-4 flex items-center text-white">
         <ApperIcon name="Scroll" className="w-4 lg:w-5 h-4 lg:h-5 mr-2 text-accent" />
         Battle Chronicle
       </h3>
 
-      <div className="max-h-48 lg:max-h-64 overflow-y-auto custom-scrollbar">
+<div className="max-h-48 sm:max-h-56 lg:max-h-64 overflow-y-auto custom-scrollbar">
         {movePairs.length === 0 ? (
           <div className="text-center py-4 lg:py-8">
             <ApperIcon name="BookOpen" className="w-8 lg:w-12 h-8 lg:h-12 text-slate-500 mx-auto mb-2 lg:mb-3" />
-            <p className="text-xs lg:text-sm text-slate-400">Chronicle awaits your first move...</p>
+            <p className="text-xs sm:text-sm lg:text-sm text-slate-400">Chronicle awaits your first move...</p>
           </div>
         ) : (
           <div className="space-y-1 lg:space-y-2">
