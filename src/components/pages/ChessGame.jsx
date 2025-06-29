@@ -262,58 +262,61 @@ return (
       transition={{ duration: 0.6 }}
       className="w-full mx-auto"
     >
-      <div className="flex flex-col space-y-3 sm:space-y-4 lg:space-y-6">
-        {/* Upper Section: Game Status + Captured Pieces */}
-        <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 lg:gap-6">
-          <div className="flex-1">
-            <GameStatus 
-              gameState={gameState} 
-              isComputerThinking={isComputerThinking}
-              difficulty={difficulty}
-            />
-          </div>
-          <div className="flex-1">
+      <div className="flex flex-col space-y-4 lg:space-y-6">
+        {/* Top Section: Horizontal Battle Status */}
+        <div className="w-full">
+          <GameStatus 
+            gameState={gameState} 
+            isComputerThinking={isComputerThinking}
+            difficulty={difficulty}
+          />
+        </div>
+
+        {/* Center Section: Chess Board with Side Panels */}
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-start">
+          {/* Left: Fallen Warriors (Captured Pieces) */}
+          <div className="w-full lg:w-80 order-2 lg:order-1">
             <CapturedPieces capturedPieces={gameState.capturedPieces} />
           </div>
-        </div>
-
-        {/* Center: Full-Width Chess Board */}
-        <div className="flex justify-center">
-          <div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 lg:p-6 shadow-2xl">
-            <ChessBoard
-              gameState={gameState}
-              selectedSquare={selectedSquare}
-              legalMoves={legalMoves}
-              hintMove={hintMove}
-              onSquareClick={handleSquareClick}
-              isComputerThinking={isComputerThinking}
-              pieceSet={pieceSet}
-            />
+          
+          {/* Center: Chess Board */}
+          <div className="flex-1 flex justify-center order-1 lg:order-2">
+            <div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 lg:p-6 shadow-2xl">
+              <ChessBoard
+                gameState={gameState}
+                selectedSquare={selectedSquare}
+                legalMoves={legalMoves}
+                hintMove={hintMove}
+                onSquareClick={handleSquareClick}
+                isComputerThinking={isComputerThinking}
+                pieceSet={pieceSet}
+              />
+            </div>
           </div>
-        </div>
-
-        {/* Lower Section: Game Controls + Move History */}
-        <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 lg:gap-6">
-          <div className="flex-1">
-            <GameControls
-              onNewGame={handleNewGame}
-              onUndo={handleUndo}
-              onHint={handleHint}
-              onReset={handleReset}
-              difficulty={difficulty}
-              onDifficultyChange={setDifficulty}
-              pieceSet={pieceSet}
-              onPieceSetChange={handlePieceSetChange}
-              audioSettings={audioSettings}
-              onAudioSettingsChange={handleAudioSettingsChange}
-              canUndo={gameState.moveHistory.length >= 2}
-              canHint={gameState && gameState.currentTurn === 'white' && !hintCooldown}
-              disabled={isComputerThinking}
-            />
-          </div>
-          <div className="flex-1">
+          
+          {/* Right: Battle Chronicle (Move History) */}
+          <div className="w-full lg:w-80 order-3">
             <MoveHistory moves={gameState.moveHistory} />
           </div>
+        </div>
+
+        {/* Bottom Section: Battle Controls (Collapsible Menu) */}
+        <div className="w-full">
+          <GameControls
+            onNewGame={handleNewGame}
+            onUndo={handleUndo}
+            onHint={handleHint}
+            onReset={handleReset}
+            difficulty={difficulty}
+            onDifficultyChange={setDifficulty}
+            pieceSet={pieceSet}
+            onPieceSetChange={handlePieceSetChange}
+            audioSettings={audioSettings}
+            onAudioSettingsChange={handleAudioSettingsChange}
+            canUndo={gameState.moveHistory.length >= 2}
+            canHint={gameState && gameState.currentTurn === 'white' && !hintCooldown}
+            disabled={isComputerThinking}
+          />
         </div>
       </div>
     </motion.div>

@@ -58,83 +58,81 @@ const GameStatus = ({ gameState, isComputerThinking, difficulty }) => {
     return info[difficulty] || info.medium;
   };
 
-  const difficultyInfo = getDifficultyInfo();
+const difficultyInfo = getDifficultyInfo();
 
-return (
+  return (
     <motion.div
-    className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 sm:p-4 lg:p-6 shadow-xl"
-    initial={{
-        opacity: 0,
-        x: -20
-    }}
-    animate={{
-        opacity: 1,
-        x: 0
-    }}
-    transition={{
-        duration: 0.5
-    }}>
-    <h3
-        className="text-sm sm:text-base lg:text-lg font-display font-semibold mb-3 lg:mb-4 flex items-center text-white">
-        <ApperIcon name="Shield" className="w-4 lg:w-5 h-4 lg:h-5 mr-2 text-accent" />Battle Status
-              </h3>
-    <div className="space-y-2 sm:space-y-3 lg:space-y-4">
-        {/* Current Status */}
-        <div
-            className="flex items-center space-x-2 lg:space-x-3 p-2 lg:p-3 bg-secondary/50 rounded-lg">
-            <ApperIcon
-                name={getStatusIcon()}
-                className={`w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 ${getStatusColor()} flex-shrink-0`} />
-<div className="flex-1">
-                <p
-                    className={`text-xs sm:text-sm lg:text-base font-medium ${getStatusColor()} break-words`}>
-                    {getStatusText()}
-                </p>
-                {isComputerThinking && <div className="flex items-center mt-1">
-                    <div
-                        className="w-2 h-2 bg-accent rounded-full animate-pulse mr-2 flex-shrink-0"></div>
-                    <span className="text-xs text-slate-400">Calculating...</span>
-                </div>}
-            </div>
+      className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 sm:p-4 lg:p-6 shadow-xl"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Header */}
+      <div className="flex items-center mb-3 lg:mb-4">
+        <ApperIcon name="Shield" className="w-4 lg:w-5 h-4 lg:h-5 mr-2 text-accent" />
+        <h3 className="text-sm sm:text-base lg:text-lg font-display font-semibold text-white">
+          Battle Status
+        </h3>
+      </div>
+
+      {/* Horizontal Status Layout */}
+      <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-6">
+        {/* Main Status with Thinking Indicator */}
+        <div className="flex-1 flex items-center space-x-3 p-3 bg-secondary/50 rounded-lg">
+          <ApperIcon
+            name={getStatusIcon()}
+            className={`w-5 lg:w-6 h-5 lg:h-6 ${getStatusColor()} flex-shrink-0`}
+          />
+          <div className="flex-1 min-w-0">
+            <p className={`text-sm lg:text-base font-medium ${getStatusColor()} truncate`}>
+              {getStatusText()}
+            </p>
+            {isComputerThinking && (
+              <div className="flex items-center mt-1">
+                <div className="w-2 h-2 bg-accent rounded-full animate-pulse mr-2 flex-shrink-0"></div>
+                <span className="text-xs text-slate-400">Calculating...</span>
+              </div>
+            )}
+          </div>
         </div>
-        {/* Current Turn Indicator */}
-        <div
-            className="flex items-center justify-between p-2 lg:p-3 bg-primary/20 rounded-lg">
-            <span className="text-xs lg:text-sm text-slate-300">Active:</span>
-            <div className="flex items-center space-x-2">
-                <div
-                    className={`w-3 h-3 rounded-full ${gameState.currentTurn === "white" ? "bg-white" : "bg-slate-800"}`}></div>
-                <span className="text-xs lg:text-sm font-medium text-white">
-                    {gameState.currentTurn === "white" ? "You" : "Computer"}
-                </span>
+
+        {/* Current Turn, Difficulty, and Stats in Horizontal Grid */}
+        <div className="flex flex-col sm:flex-row gap-3 lg:gap-4">
+          {/* Current Turn */}
+          <div className="flex items-center space-x-2 p-2 bg-primary/20 rounded-lg min-w-0">
+            <span className="text-xs text-slate-300 whitespace-nowrap">Active:</span>
+            <div className="flex items-center space-x-1">
+              <div className={`w-3 h-3 rounded-full ${gameState.currentTurn === "white" ? "bg-white" : "bg-slate-800"}`}></div>
+              <span className="text-xs font-medium text-white">
+                {gameState.currentTurn === "white" ? "You" : "AI"}
+              </span>
             </div>
-        </div>
-        {/* Opponent Difficulty */}
-        <div className="space-y-1 lg:space-y-2">
-            <div className="flex items-center justify-between">
-                <span className="text-xs lg:text-sm text-slate-300">Opponent:</span>
-                <span className={`text-xs lg:text-sm font-medium ${difficultyInfo.color}`}>
-                    {difficultyInfo.name}
-                </span>
-            </div>
-<p className="text-xs text-slate-400 break-words">{difficultyInfo.description}</p>
-        </div>
-        {/* Game Stats */}
-        {/* Game Stats */}
-        <div
-            className="grid grid-cols-2 gap-2 lg:gap-3 pt-2 lg:pt-3 border-t border-primary/20">
+          </div>
+
+          {/* Difficulty */}
+          <div className="flex items-center space-x-2 p-2 bg-primary/20 rounded-lg min-w-0">
+            <span className="text-xs text-slate-300 whitespace-nowrap">vs</span>
+            <span className={`text-xs font-medium ${difficultyInfo.color} truncate`}>
+              {difficultyInfo.name}
+            </span>
+          </div>
+
+          {/* Game Stats */}
+          <div className="flex space-x-3 p-2 bg-primary/20 rounded-lg">
             <div className="text-center">
-                <p className="text-base sm:text-lg lg:text-2xl font-bold text-accent">{gameState.moveHistory.length}</p>
-                <p className="text-xs text-slate-400">Moves</p>
+              <p className="text-sm lg:text-base font-bold text-accent">{gameState.moveHistory.length}</p>
+              <p className="text-xs text-slate-400">Moves</p>
             </div>
             <div className="text-center">
-                <p className="text-base sm:text-lg lg:text-2xl font-bold text-purple-400">
-                    {Math.floor(gameState.moveHistory.length / 2) + 1}
-                </p>
-                <p className="text-xs text-slate-400">Turn</p>
+              <p className="text-sm lg:text-base font-bold text-purple-400">
+                {Math.floor(gameState.moveHistory.length / 2) + 1}
+              </p>
+              <p className="text-xs text-slate-400">Turn</p>
             </div>
+          </div>
         </div>
-    </div></motion.div>
+      </div>
+    </motion.div>
   );
 };
 
