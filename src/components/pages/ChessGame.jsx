@@ -276,7 +276,7 @@ transition={{ duration: 0.6 }}
           />
         </div>
 
-        {/* Quick Action Bar */}
+{/* Quick Action Bar */}
         <div className="w-full flex justify-center">
           <div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 shadow-xl">
             <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
@@ -290,6 +290,32 @@ transition={{ duration: 0.6 }}
                 <ApperIcon name="Swords" className="w-3 sm:w-4 h-3 sm:h-4 mr-1 lg:mr-2" />
                 <span className="hidden sm:inline">New Battle</span>
                 <span className="sm:hidden">New</span>
+              </Button>
+
+              <Button
+                variant="secondary"
+                onClick={toggleCapturedPieces}
+                disabled={isComputerThinking}
+                size="sm"
+                className="hover:bg-primary/20 text-xs sm:text-sm lg:text-base"
+                title={showCapturedPieces ? "Hide Fallen Warriors" : "Show Fallen Warriors"}
+              >
+                <ApperIcon name={showCapturedPieces ? "EyeOff" : "Eye"} className="w-3 sm:w-4 h-3 sm:h-4 mr-1 lg:mr-2" />
+                <span className="hidden sm:inline">{showCapturedPieces ? "Hide" : "Show"} Warriors</span>
+                <span className="sm:hidden">{showCapturedPieces ? "Hide" : "Show"} W</span>
+              </Button>
+
+              <Button
+                variant="secondary"
+                onClick={toggleMoveHistory}
+                disabled={isComputerThinking}
+                size="sm"
+                className="hover:bg-primary/20 text-xs sm:text-sm lg:text-base"
+                title={showMoveHistory ? "Hide Battle Chronicle" : "Show Battle Chronicle"}
+              >
+                <ApperIcon name={showMoveHistory ? "EyeOff" : "Eye"} className="w-3 sm:w-4 h-3 sm:h-4 mr-1 lg:mr-2" />
+                <span className="hidden sm:inline">{showMoveHistory ? "Hide" : "Show"} Chronicle</span>
+                <span className="sm:hidden">{showMoveHistory ? "Hide" : "Show"} C</span>
               </Button>
 
               <Button
@@ -337,7 +363,7 @@ transition={{ duration: 0.6 }}
           <div className={`grid gap-3 lg:gap-6 items-start ${
             showCapturedPieces || showMoveHistory 
               ? 'grid-cols-1 lg:grid-cols-[320px_1fr]' 
-              : 'grid-cols-1 lg:grid-cols-[auto_1fr]'
+              : 'grid-cols-1 justify-center'
           }`}>
             {/* Left Column: Fallen Warriors & Battle Chronicle */}
             {(showCapturedPieces || showMoveHistory) && (
