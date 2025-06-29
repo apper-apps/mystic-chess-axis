@@ -1,8 +1,8 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import Layout from '@/components/organisms/Layout';
-import ChessGame from '@/components/pages/ChessGame';
+import React from "react";
+import { Route, Router, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import ChessGame from "@/components/pages/ChessGame";
+import Layout from "@/components/organisms/Layout";
 
 function App() {
   return (

@@ -14,9 +14,9 @@ const ChessSquare = ({
   onClick,
   disabled
 }) => {
-  const squareClasses = [
+const squareClasses = [
     'chess-square',
-    'w-16 h-16',
+    'w-9 h-9 sm:w-12 sm:h-12 lg:w-16 lg:h-16',
     isLight ? 'light' : 'dark',
     isSelected && 'selected',
     isLegalMove && !isCaptureMove && 'legal-move',
@@ -41,9 +41,9 @@ const ChessSquare = ({
         />
       )}
       
-      {isLegalMove && !piece && (
+{isLegalMove && !piece && (
         <motion.div
-          className="w-3 h-3 bg-accent rounded-full opacity-70"
+          className="w-2 h-2 sm:w-3 sm:h-3 bg-accent rounded-full opacity-70"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.2 }}
