@@ -272,15 +272,15 @@ return (
           />
         </div>
 
-        {/* Center Section: Chess Board with Side Panels */}
-        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-start">
+{/* Center Section: Chess Board with Side Panels */}
+        <div className="flex flex-col lg:flex-row gap-3 lg:gap-4 items-start">
           {/* Left: Fallen Warriors (Captured Pieces) */}
-          <div className="w-full lg:w-80 order-2 lg:order-1">
+          <div className="w-full lg:w-96 lg:flex-shrink-0 order-2 lg:order-1">
             <CapturedPieces capturedPieces={gameState.capturedPieces} />
           </div>
           
           {/* Center: Chess Board */}
-          <div className="flex-1 flex justify-center order-1 lg:order-2">
+          <div className="flex-1 flex justify-center order-1 lg:order-2 min-w-0">
             <div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 lg:p-6 shadow-2xl">
               <ChessBoard
                 gameState={gameState}
@@ -295,7 +295,7 @@ return (
           </div>
           
           {/* Right: Battle Chronicle (Move History) */}
-          <div className="w-full lg:w-80 order-3">
+          <div className="w-full lg:w-96 lg:flex-shrink-0 order-3">
             <MoveHistory moves={gameState.moveHistory} />
           </div>
         </div>
