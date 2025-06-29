@@ -4,8 +4,11 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: {
+theme: {
     extend: {
+      screens: {
+        'md': '768px',
+      },
       fontFamily: {
         'display': ['Cinzel', 'serif'],
         'body': ['Inter', 'sans-serif'],
@@ -20,6 +23,10 @@ export default {
         warning: '#F59E0B',
         error: '#EF4444',
         info: '#3B82F6',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
       },
       animation: {
         'pulse-glow': 'pulse-glow 2s ease-in-out infinite',

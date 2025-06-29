@@ -211,9 +211,9 @@ return (
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="max-w-7xl mx-auto"
+className="max-w-7xl mx-auto px-2 sm:px-4"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
         {/* Game Status - Mobile First, Desktop Left */}
         <div className="lg:col-span-1 order-1 lg:order-1">
           <GameStatus 
@@ -225,7 +225,7 @@ return (
 
         {/* Main Chess Board - Mobile Second, Desktop Center */}
         <div className="lg:col-span-2 order-2 lg:order-2">
-<div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 lg:p-6 shadow-2xl">
+          <div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-2 sm:p-3 md:p-4 lg:p-6 shadow-2xl">
             <ChessBoard
               gameState={gameState}
               selectedSquare={selectedSquare}
@@ -239,7 +239,7 @@ return (
         </div>
 
         {/* Game Controls - Mobile Third, Desktop Right Top */}
-<div className="lg:col-span-1 order-3 lg:order-3">
+        <div className="lg:col-span-1 order-3 lg:order-3">
           <GameControls
             onNewGame={handleNewGame}
             onUndo={handleUndo}

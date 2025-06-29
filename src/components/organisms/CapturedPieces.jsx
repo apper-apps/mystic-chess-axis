@@ -52,64 +52,64 @@ const CapturedPieces = ({ capturedPieces }) => {
 
 return (
     <motion.div
-      className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-4 lg:p-6 shadow-xl"
+      className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-2 sm:p-3 md:p-4 lg:p-6 shadow-xl"
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: 0.1 }}
     >
-      <h3 className="text-base lg:text-lg font-display font-semibold mb-3 lg:mb-4 flex items-center text-white">
-        <ApperIcon name="Trophy" className="w-4 lg:w-5 h-4 lg:h-5 mr-2 text-accent" />
+      <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-display font-semibold mb-2 sm:mb-3 md:mb-4 flex items-center text-white">
+        <ApperIcon name="Trophy" className="w-4 sm:w-5 h-4 sm:h-5 mr-2 text-accent" />
         Fallen Warriors
       </h3>
 
-      <div className="space-y-3 lg:space-y-4">
+      <div className="space-y-2 sm:space-y-3 md:space-y-4">
         {/* Captured by You (Black pieces) */}
-        <div className="space-y-1 lg:space-y-2">
+        <div className="space-y-1 sm:space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs lg:text-sm font-medium text-slate-300">Your Captures:</span>
-            <span className="text-xs text-accent">
+            <span className="text-xs sm:text-sm md:text-base font-medium text-slate-300">Your Captures:</span>
+            <span className="text-xs sm:text-sm text-accent">
               {capturedPieces.black.length}
             </span>
           </div>
-          <div className="min-h-6 lg:min-h-8 p-1 lg:p-2 bg-secondary/30 rounded border border-primary/10">
+          <div className="min-h-6 sm:min-h-7 md:min-h-8 p-1 sm:p-2 bg-secondary/30 rounded border border-primary/10">
             {capturedPieces.black.length > 0 ? (
               renderCapturedPieces(capturedPieces.black, 'black')
             ) : (
-              <span className="text-xs text-slate-500 italic">None yet...</span>
+              <span className="text-xs sm:text-sm text-slate-500 italic">None yet...</span>
             )}
           </div>
         </div>
 
-        {/* Captured by Computer (White pieces) */}
-        <div className="space-y-1 lg:space-y-2">
+{/* Captured by Computer (White pieces) */}
+        <div className="space-y-1 sm:space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs lg:text-sm font-medium text-slate-300">Enemy Captures:</span>
-            <span className="text-xs text-error">
+            <span className="text-xs sm:text-sm md:text-base font-medium text-slate-300">Enemy Captures:</span>
+            <span className="text-xs sm:text-sm text-error">
               {capturedPieces.white.length}
             </span>
           </div>
-          <div className="min-h-6 lg:min-h-8 p-1 lg:p-2 bg-secondary/30 rounded border border-primary/10">
+          <div className="min-h-6 sm:min-h-7 md:min-h-8 p-1 sm:p-2 bg-secondary/30 rounded border border-primary/10">
             {capturedPieces.white.length > 0 ? (
               renderCapturedPieces(capturedPieces.white, 'white')
             ) : (
-              <span className="text-xs text-slate-500 italic">None yet...</span>
+              <span className="text-xs sm:text-sm text-slate-500 italic">None yet...</span>
             )}
           </div>
         </div>
 
         {/* Material Advantage */}
         {(capturedPieces.white.length > 0 || capturedPieces.black.length > 0) && (
-          <div className="pt-2 lg:pt-3 border-t border-primary/20">
+          <div className="pt-2 sm:pt-3 md:pt-3 border-t border-primary/20">
             <div className="flex items-center justify-between">
-              <span className="text-xs lg:text-sm text-slate-300">Balance:</span>
-              <div className="flex items-center space-x-1 lg:space-x-2">
+              <span className="text-xs sm:text-sm md:text-base text-slate-300">Balance:</span>
+              <div className="flex items-center space-x-1 sm:space-x-2">
                 {materialAdvantage !== 0 && (
                   <ApperIcon 
                     name={materialAdvantage > 0 ? "TrendingUp" : "TrendingDown"} 
-                    className={`w-3 lg:w-4 h-3 lg:h-4 ${materialAdvantage > 0 ? 'text-success' : 'text-error'}`} 
+                    className={`w-3 sm:w-4 h-3 sm:h-4 ${materialAdvantage > 0 ? 'text-success' : 'text-error'}`} 
                   />
                 )}
-                <span className={`font-bold text-xs lg:text-sm ${
+                <span className={`font-bold text-xs sm:text-sm md:text-base ${
                   materialAdvantage > 0 ? 'text-success' : 
                   materialAdvantage < 0 ? 'text-error' : 'text-slate-400'
                 }`}>
@@ -119,7 +119,7 @@ return (
               </div>
             </div>
             {materialAdvantage !== 0 && (
-              <p className="text-xs text-slate-400 mt-1 hidden lg:block">
+              <p className="text-xs sm:text-sm text-slate-400 mt-1 hidden md:block">
                 {materialAdvantage > 0 ? 'You have the advantage!' : 'Computer leads in material'}
               </p>
             )}

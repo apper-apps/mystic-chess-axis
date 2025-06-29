@@ -5,7 +5,7 @@ import ChessGame from "@/components/pages/ChessGame";
 import Layout from "@/components/organisms/Layout";
 
 function App() {
-  return (
+return (
     <BrowserRouter>
       <div className="min-h-screen bg-background text-white font-body">
         <Layout>
