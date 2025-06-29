@@ -8,7 +8,7 @@ import GameStatus from '@/components/organisms/GameStatus';
 import CapturedPieces from '@/components/organisms/CapturedPieces';
 import { ChessService } from '@/services/api/chessService';
 import { ComputerPlayer } from '@/services/api/computerPlayer';
-
+import { AudioService } from '@/services/api/audioService';
 const ChessGame = () => {
   const [gameState, setGameState] = useState(null);
   const [selectedSquare, setSelectedSquare] = useState(null);
@@ -18,14 +18,24 @@ const ChessGame = () => {
   const [isComputerThinking, setIsComputerThinking] = useState(false);
   const [hintMove, setHintMove] = useState(null);
   const [hintCooldown, setHintCooldown] = useState(false);
-
+  const [audioSettings, setAudioSettings] = useState(AudioService.getSettings());
 useEffect(() => {
     initializeGame();
+    
+    // Initialize audio service
+    AudioService.getInstance();
+    AudioService.startAmbientMusic();
+    
     // Load saved piece set preference
     const savedPieceSet = localStorage.getItem('mysticChess_pieceSet');
     if (savedPieceSet && ['classic', 'dragons', 'wizards', 'warriors'].includes(savedPieceSet)) {
       setPieceSet(savedPieceSet);
     }
+
+    // Cleanup audio on unmount
+    return () => {
+      AudioService.cleanup();
+    };
   }, []);
 
   useEffect(() => {
@@ -34,12 +44,15 @@ useEffect(() => {
     }
   }, [gameState?.currentTurn, gameState?.gameStatus]);
 
-  const initializeGame = () => {
+const initializeGame = () => {
     const newGame = ChessService.createNewGame();
     setGameState(newGame);
     setSelectedSquare(null);
     setLegalMoves([]);
     toast.success("A new mystical battle begins!");
+    
+    // Restart ambient music for new game
+    AudioService.startAmbientMusic();
   };
 
   const makeComputerMove = async () => {
@@ -51,15 +64,25 @@ useEffect(() => {
     await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
 
     try {
-      const computerMove = ComputerPlayer.findBestMove(gameState, difficulty);
+const computerMove = ComputerPlayer.findBestMove(gameState, difficulty);
       
       if (computerMove) {
         const updatedGame = ChessService.makeMove(gameState, computerMove.from, computerMove.to);
         setGameState(updatedGame);
         
+        // Play appropriate sound for computer move
+        const lastMove = updatedGame.moveHistory[updatedGame.moveHistory.length - 1];
+        if (lastMove?.captured) {
+          AudioService.playMove('capture');
+        } else {
+          AudioService.playMove('normal');
+        }
+        
         if (updatedGame.gameStatus === 'checkmate') {
+          AudioService.playCheckmate();
           toast.error("The dark forces have triumphed! Checkmate!");
         } else if (updatedGame.gameStatus === 'check') {
+          AudioService.playCheck();
           toast.warning("Your king is under attack!");
         }
       }
@@ -79,15 +102,25 @@ useEffect(() => {
 
     // If clicking on a legal move destination
     if (selectedSquare && legalMoves.some(move => move.to === square)) {
-      try {
+try {
         const updatedGame = ChessService.makeMove(gameState, selectedSquare, square);
         setGameState(updatedGame);
         setSelectedSquare(null);
         setLegalMoves([]);
 
+        // Play appropriate sound for player move
+        const lastMove = updatedGame.moveHistory[updatedGame.moveHistory.length - 1];
+        if (lastMove?.captured) {
+          AudioService.playMove('capture');
+        } else {
+          AudioService.playMove('normal');
+        }
+
         if (updatedGame.gameStatus === 'checkmate') {
+          AudioService.playCheckmate();
           toast.success("Victory! The light has triumphed!");
         } else if (updatedGame.gameStatus === 'check') {
+          AudioService.playCheck();
           toast.warning("Check! The enemy king trembles!");
         }
       } catch (error) {
@@ -193,7 +226,24 @@ toast.success(`Piece style changed to ${pieceSetNames[newPieceSet]}!`);
       setHintCooldown(false);
       toast.success("The battlefield has been reset by ancient magic!");
     }
+};
+
+  const handleAudioSettingsChange = (newSettings) => {
+    AudioService.updateSettings(newSettings);
+    setAudioSettings(AudioService.getSettings());
+    
+    const settingNames = {
+      soundEnabled: 'Sound Effects',
+      musicEnabled: 'Ambient Music',
+      masterVolume: 'Master Volume'
+    };
+    
+    const changedSetting = Object.keys(newSettings)[0];
+    if (settingNames[changedSetting]) {
+      toast.info(`${settingNames[changedSetting]} updated!`);
+    }
   };
+
   if (!gameState) {
     return (
       <div className="flex items-center justify-center min-h-96">
@@ -248,6 +298,8 @@ return (
             onDifficultyChange={setDifficulty}
             pieceSet={pieceSet}
             onPieceSetChange={handlePieceSetChange}
+            audioSettings={audioSettings}
+            onAudioSettingsChange={handleAudioSettingsChange}
             canUndo={gameState.moveHistory.length >= 2}
             canHint={gameState && gameState.currentTurn === 'white' && !hintCooldown}
             disabled={isComputerThinking}

@@ -361,7 +361,7 @@ export class ChessService {
       }
     }
 
-    // Add move to history
+// Add move to history
     const moveNotation = this.getMoveNotation(gameState, fromSquare, toSquare, move, capturedPiece);
     newGameState.moveHistory.push({
       from: fromSquare,
@@ -369,7 +369,8 @@ export class ChessService {
       piece: piece,
       captured: capturedPiece,
       notation: moveNotation,
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      audioType: capturedPiece ? 'capture' : 'normal'
     });
 
     // Switch turns
