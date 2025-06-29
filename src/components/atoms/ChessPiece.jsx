@@ -42,6 +42,9 @@ const ChessPiece = ({ type, color, isSelected, disabled, pieceSet = 'classic' })
 
 const pieceClasses = [
     'chess-piece',
+    'flex',
+    'items-center',
+    'justify-center',
     color,
     pieceSet !== 'classic' && 'fantasy-piece',
     isSelected && 'selected',
