@@ -332,17 +332,18 @@ transition={{ duration: 0.6 }}
           </div>
         </div>
 
-{/* Center Section: Chess Board with Side Panels */}
+{/* Center Section: Chess Board with Left Side Panels */}
         <div className="w-full">
           <div 
             className="grid gap-3 lg:gap-4 items-start"
             style={{
-              gridTemplateColumns: `${showCapturedPieces ? 'minmax(280px, 1fr)' : 'auto'} minmax(0, 2fr) ${showMoveHistory ? 'minmax(280px, 1fr)' : 'auto'}`,
-              gridTemplateAreas: '"left center right"'
+              gridTemplateColumns: `${showCapturedPieces || showMoveHistory ? 'minmax(280px, 1fr)' : 'auto'} minmax(0, 2fr)`,
+              gridTemplateAreas: '"left center"'
             }}
           >
-            {/* Left: Fallen Warriors (Captured Pieces) */}
-            <div className="flex flex-col" style={{ gridArea: 'left' }}>
+            {/* Left: Fallen Warriors & Battle Chronicle */}
+            <div className="flex flex-col space-y-3 lg:space-y-4" style={{ gridArea: 'left' }}>
+              {/* Fallen Warriors (Captured Pieces) */}
               {showCapturedPieces ? (
                 <CapturedPieces 
                   capturedPieces={gameState.capturedPieces}
@@ -365,6 +366,30 @@ transition={{ duration: 0.6 }}
                   </Button>
                 </motion.div>
               )}
+
+              {/* Battle Chronicle (Move History) */}
+              {showMoveHistory ? (
+                <MoveHistory 
+                  moves={gameState.moveHistory}
+                  isCollapsed={false}
+                  onToggle={toggleMoveHistory}
+                />
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="flex justify-center"
+                >
+                  <Button
+                    variant="secondary"
+                    onClick={toggleMoveHistory}
+                    className="writing-vertical-rl text-orientation-mixed p-2 h-32 hover:bg-primary/20"
+                    title="Show Battle Chronicle"
+                  >
+                    <ApperIcon name="Scroll" className="w-4 h-4" />
+                  </Button>
+                </motion.div>
+              )}
             </div>
             
             {/* Center: Chess Board */}
@@ -380,32 +405,6 @@ transition={{ duration: 0.6 }}
                   pieceSet={pieceSet}
                 />
               </div>
-            </div>
-            
-            {/* Right: Battle Chronicle (Move History) */}
-            <div className="flex flex-col" style={{ gridArea: 'right' }}>
-              {showMoveHistory ? (
-                <MoveHistory 
-                  moves={gameState.moveHistory}
-                  isCollapsed={false}
-                  onToggle={toggleMoveHistory}
-                />
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="flex justify-center"
-                >
-                  <Button
-                    variant="secondary"
-                    onClick={toggleMoveHistory}
-                    className="writing-vertical-rl text-orientation-mixed p-2 h-32 hover:bg-primary/20"
-                    title="Show Battle Chronicle"
-                  >
-                    <ApperIcon name="Scroll" className="w-4 h-4" />
-                  </Button>
-                </motion.div>
-              )}
             </div>
           </div>
         </div>
