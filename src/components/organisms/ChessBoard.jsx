@@ -64,9 +64,9 @@ return (
                 {rank}
             </div>)}
         </div>
-        {/* Chess board */}
+{/* Chess board */}
         <motion.div
-            className="grid grid-cols-8 border-2 lg:border-4 border-primary/30 rounded-lg overflow-hidden shadow-2xl w-72 h-72 sm:w-96 sm:h-96 lg:w-[512px] lg:h-[512px]"
+            className="grid grid-cols-8 border-2 lg:border-4 border-primary/30 rounded-lg overflow-hidden shadow-2xl w-72 sm:w-96 lg:w-[512px] aspect-square"
             initial={{
                 scale: 0.9,
                 opacity: 0
