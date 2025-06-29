@@ -8,7 +8,8 @@ const ChessBoard = ({
   selectedSquare, 
   legalMoves, 
   onSquareClick, 
-  isComputerThinking 
+  isComputerThinking,
+  pieceSet = 'classic'
 }) => {
   const renderSquare = (row, col) => {
     const square = ChessService.getSquareNotation(row, col);
@@ -20,7 +21,7 @@ const ChessBoard = ({
                      piece.color === gameState.currentTurn && 
                      gameState.gameStatus === 'check';
 
-    return (
+return (
       <ChessSquare
         key={`${row}-${col}`}
         row={row}
@@ -33,6 +34,7 @@ const ChessBoard = ({
         isInCheck={isInCheck}
         onClick={() => onSquareClick(row, col)}
         disabled={isComputerThinking}
+        pieceSet={pieceSet}
       />
     );
   };

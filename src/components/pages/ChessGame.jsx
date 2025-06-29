@@ -14,10 +14,16 @@ const ChessGame = () => {
   const [selectedSquare, setSelectedSquare] = useState(null);
   const [legalMoves, setLegalMoves] = useState([]);
   const [difficulty, setDifficulty] = useState('medium');
+  const [pieceSet, setPieceSet] = useState('classic');
   const [isComputerThinking, setIsComputerThinking] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
     initializeGame();
+    // Load saved piece set preference
+    const savedPieceSet = localStorage.getItem('mysticChess_pieceSet');
+    if (savedPieceSet && ['classic', 'dragons', 'wizards', 'warriors'].includes(savedPieceSet)) {
+      setPieceSet(savedPieceSet);
+    }
   }, []);
 
   useEffect(() => {
@@ -129,6 +135,20 @@ const ChessGame = () => {
     } else {
       initializeGame();
     }
+};
+
+  const handlePieceSetChange = (newPieceSet) => {
+    setPieceSet(newPieceSet);
+    localStorage.setItem('mysticChess_pieceSet', newPieceSet);
+    
+    const pieceSetNames = {
+      classic: 'Classic Chess pieces',
+      dragons: 'Ancient Dragon pieces',
+      wizards: 'Mystic Wizard pieces',
+      warriors: 'Epic Warrior pieces'
+    };
+    
+    toast.success(`Piece style changed to ${pieceSetNames[newPieceSet]}!`);
   };
 
   if (!gameState) {
@@ -161,24 +181,27 @@ return (
 
         {/* Main Chess Board - Mobile Second, Desktop Center */}
         <div className="lg:col-span-2 order-2 lg:order-2">
-          <div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 lg:p-6 shadow-2xl">
+<div className="bg-surface/30 backdrop-blur-sm rounded-xl border border-primary/20 p-3 lg:p-6 shadow-2xl">
             <ChessBoard
               gameState={gameState}
               selectedSquare={selectedSquare}
               legalMoves={legalMoves}
               onSquareClick={handleSquareClick}
               isComputerThinking={isComputerThinking}
+              pieceSet={pieceSet}
             />
           </div>
         </div>
 
         {/* Game Controls - Mobile Third, Desktop Right Top */}
-        <div className="lg:col-span-1 order-3 lg:order-3">
+<div className="lg:col-span-1 order-3 lg:order-3">
           <GameControls
             onNewGame={handleNewGame}
             onUndo={handleUndo}
             difficulty={difficulty}
             onDifficultyChange={setDifficulty}
+            pieceSet={pieceSet}
+            onPieceSetChange={handlePieceSetChange}
             canUndo={gameState.moveHistory.length >= 2}
             disabled={isComputerThinking}
           />

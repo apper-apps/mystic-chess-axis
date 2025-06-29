@@ -12,17 +12,17 @@ const ChessSquare = ({
   isCaptureMove,
   isInCheck,
   onClick,
-  disabled
+  disabled,
+  pieceSet = 'classic'
 }) => {
-const squareClasses = [
+  const squareClasses = [
     'chess-square',
-    'w-9 h-9 sm:w-12 sm:h-12 lg:w-16 lg:h-16',
     isLight ? 'light' : 'dark',
     isSelected && 'selected',
-    isLegalMove && !isCaptureMove && 'legal-move',
+    isLegalMove && 'legal-move',
     isCaptureMove && 'capture-move',
     isInCheck && 'in-check',
-    !disabled && 'cursor-pointer'
+    disabled && 'opacity-50 cursor-not-allowed'
   ].filter(Boolean).join(' ');
 
   return (
@@ -31,6 +31,7 @@ const squareClasses = [
       onClick={!disabled ? onClick : undefined}
       whileHover={!disabled ? { scale: 1.02 } : {}}
       whileTap={!disabled ? { scale: 0.98 } : {}}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
     >
       {piece && (
         <ChessPiece
@@ -38,15 +39,7 @@ const squareClasses = [
           color={piece.color}
           isSelected={isSelected}
           disabled={disabled}
-        />
-      )}
-      
-{isLegalMove && !piece && (
-        <motion.div
-          className="w-2 h-2 sm:w-3 sm:h-3 bg-accent rounded-full opacity-70"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.2 }}
+          pieceSet={pieceSet}
         />
       )}
     </motion.div>

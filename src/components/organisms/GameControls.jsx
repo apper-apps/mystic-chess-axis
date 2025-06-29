@@ -9,6 +9,8 @@ const GameControls = ({
   onUndo,
   difficulty,
   onDifficultyChange,
+  pieceSet,
+  onPieceSetChange,
   canUndo,
   disabled
 }) => {
@@ -16,6 +18,13 @@ const GameControls = ({
     { value: 'easy', label: 'Apprentice (Easy)' },
     { value: 'medium', label: 'Warrior (Medium)' },
     { value: 'hard', label: 'Master (Hard)' }
+  ];
+
+  const pieceSetOptions = [
+    { value: 'classic', label: 'Classic Chess' },
+    { value: 'dragons', label: 'Ancient Dragons' },
+    { value: 'wizards', label: 'Mystic Wizards' },
+    { value: 'warriors', label: 'Epic Warriors' }
   ];
 
 return (
@@ -43,6 +52,17 @@ return (
           />
         </div>
 
+        <div>
+          <label className="block text-xs sm:text-sm font-medium text-slate-300 mb-2">
+            Piece Style
+          </label>
+          <Select
+            value={pieceSet}
+            onChange={onPieceSetChange}
+            options={pieceSetOptions}
+            disabled={disabled}
+          />
+        </div>
 <div className="grid grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-2 lg:gap-3">
           <Button
             variant="primary"
