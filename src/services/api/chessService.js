@@ -675,15 +675,15 @@ static generatePieceAttacks(gameState, row, col, piece) {
 return pieces;
   }
 
-  static getHint(gameState, difficulty = 'medium') {
+static async getHint(gameState, difficulty = 'medium') {
     if (!gameState || gameState.currentTurn !== 'white' || gameState.gameStatus !== 'active') {
       return null;
     }
 
-    // Import ComputerPlayer dynamically to avoid circular dependency
-    const { ComputerPlayer } = require('./computerPlayer');
-    
     try {
+      // Import ComputerPlayer dynamically to avoid circular dependency
+      const { ComputerPlayer } = await import('./computerPlayer');
+      
       const bestMove = ComputerPlayer.findBestMove(gameState, difficulty);
       if (bestMove) {
         const fromPos = this.parseSquareNotation(bestMove.from);
